@@ -1,6 +1,21 @@
 import { useEffect } from "react"
 import "./Authentication.css"
+import "./ContentBox.css"
 import { AuthState } from "./AuthState"
+
+
+const InputFeild = (props) => {
+    return (
+        <div className={"Auth-InputFieldWrapper"} id={props.Id}>
+            <input type={props.inputType} spellCheck="false" placeholder={props.placeHolder} id={props.inputId}/>
+            <div id={props.CancelId} className="ClearInputButton" pipeline={props.Pipeline}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 67 67" fill="none">
+                    <path d="M33.5 0C52.0015 0 67 14.9985 67 33.5C67 52.0015 52.0015 67 33.5 67C14.9985 67 0 52.0015 0 33.5C0 14.9985 14.9985 0 33.5 0ZM46.4307 20.4746C45.4543 19.4985 43.8708 19.4984 42.8945 20.4746L33.3486 30.0205L23.8027 20.4746C22.8264 19.4988 21.2437 19.4985 20.2676 20.4746C19.2915 21.4508 19.2918 23.0334 20.2676 24.0098L29.8135 33.5557L20.2676 43.1025C19.2916 44.0788 19.2916 45.6614 20.2676 46.6377C21.2438 47.6139 22.8264 47.6137 23.8027 46.6377L33.3486 37.0908L42.8955 46.6377C43.8718 47.6137 45.4544 47.6139 46.4307 46.6377C47.4069 45.6615 47.4067 44.0789 46.4307 43.1025L36.8838 33.5557L46.4307 24.0098C47.4067 23.0334 47.4068 21.4508 46.4307 20.4746Z" fill="black" />
+                </svg>
+            </div>
+        </div>
+    )
+}
 
 const Authentication = () => {
     useEffect(() => {
@@ -9,7 +24,7 @@ const Authentication = () => {
         return () => {
             s.Cleanup()
         }
-    } , [])
+    }, [])
     return (
         <div id="Authentication-Big">
             <div className="Authentication-Card">
@@ -18,23 +33,66 @@ const Authentication = () => {
                         <span>Fill in details to login</span>
                     </div>
                 </div>
-                <div className="Auth-Card-Content-Box"></div>
+                <div className="Auth-Card-Content-Box" pipeline="LoginPipeline">
+                    <div className="Pipeline Auth-Card-Login-Pipeline">
+                        <div className="PipelineSlider">
+                            <div className="PipelineComponent">
+                                <div className="Input-Details-Container Login-UserMail-Detail-Container">
+                                    <div className="Input-Property-Container">
+                                        <span>Usermail</span>
+                                    </div>
+                                    <div className="Input-Feild-Wrapper">
+                                        {InputFeild({ Pipeline : "Login" , Id: "Login-InputFeild-UserName", inputType: "text", placeHolder: "eg : Jake@gmail.com", CancelId: "LoginMailCancel" , inputId : "LoginMailInput" })}
+                                    </div>
+                                </div>
+
+                                <div className="Input-Details-Container Login-Password-Detail-Container">
+                                    <div className="Input-Property-Container">
+                                        <span>Password</span>
+                                    </div>
+                                    <div className="Input-Feild-Wrapper">
+                                        {InputFeild({ Pipeline : "Login" , Id: "Login-InputFeild-Password", inputType: "password", placeHolder: "#", CancelId: "LoginPassCancel" , inputId : "LoginPassInput" })}
+                                    </div>
+                                </div>
+                                <div className="Login-Forgot-Password">
+                                    <span>Hide Password</span>
+                                    <div className="Login-Forgot-Wrapper">
+                                        <div className="Show-Hide-Password-Toggle Hide" id="LoginPassToggle">
+                                            <span></span>
+                                        </div>
+                                        <span id="Forgot-Password">Forgot Password ?</span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className="PipelineComponent"></div>
+                            <div className="PipelineComponent"></div>
+                        </div>
+                    </div>
+                    <div className="Pipeline Auth-Card-Signup-Pipeline">
+                        <div className="PipelineSlider">
+                            <div className="PipelineComponent"></div>
+                            <div className="PipelineComponent"></div>
+                        </div>
+                    </div>
+                </div>
                 <div className="Auth-Card-Bottom-Box" >
                     <div className="Login-Signup-Switch" id="Login-Signup-Switch">
                         <div className="Switch-Selector" id="Switch-Selector"></div>
-                        <div login="1"className="Switch"><span className="s1">Login</span></div>
-                        <div login="0"className="Switch"><span className="s2">Sign-up</span></div>
+                        <div login="1" className="Switch"><span className="s1">Login</span></div>
+                        <div login="0" className="Switch"><span className="s2">Sign-up</span></div>
                     </div>
                     <div className="Proceed-Prev-Button-Container">
-                        <div className="Previous-Button-Container">
+                        <div className="Previous-Button-Container Pale">
                             <span></span>
                             <span></span>
                         </div>
                         <div className="Proceed-Button-Preview Pale">
                             <div className="Procced-Button-SVG-Container">
-                                <svg xmlns="http://www.w3.org/2000/svg"  width="30" viewBox="0 0 80 80">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" viewBox="0 0 80 80">
                                     <g id="Regular-S">
-                                        <path id="Path" fill="#000000" stroke="none" d="M 39.82019 79.150391 C 45.223877 79.150391 50.302002 78.125 55.054565 76.074219 C 59.807129 74.023438 63.998291 71.175171 67.62793 67.529297 C 71.257446 63.883423 74.105713 59.684204 76.172852 54.931641 C 78.239868 50.179077 79.273438 45.117188 79.273438 39.746094 C 79.273438 34.375 78.239868 29.31311 76.172852 24.560547 C 74.105713 19.807983 71.249268 15.608765 67.603394 11.962891 C 63.95752 8.317017 59.758423 5.46875 55.005859 3.417969 C 50.253296 1.367188 45.175049 0.341797 39.771362 0.341797 C 34.400391 0.341797 29.338501 1.367188 24.585938 3.417969 C 19.833374 5.46875 15.650391 8.317017 12.036987 11.962891 C 8.423706 15.608765 5.583496 19.807983 3.516479 24.560547 C 1.449463 29.31311 0.415894 34.375 0.415894 39.746094 C 0.415894 45.117188 1.449463 50.179077 3.516479 54.931641 C 5.583496 59.684204 8.431885 63.883423 12.061401 67.529297 C 15.69104 71.175171 19.88208 74.023438 24.634644 76.074219 C 29.387207 78.125 34.449097 79.150391 39.82019 79.150391 Z M 35.523438 58.59375 C 34.774658 58.59375 34.082886 58.422852 33.448242 58.081055 C 32.813354 57.739258 32.203003 57.19397 31.617065 56.445313 L 22.535156 45.068359 C 21.85144 44.189453 21.509644 43.245483 21.509644 42.236328 C 21.509644 41.259766 21.843384 40.413452 22.510742 39.697266 C 23.177979 38.981079 24.016113 38.623047 25.025269 38.623047 C 25.643799 38.623047 26.213379 38.753296 26.734253 39.013672 C 27.255127 39.274048 27.775879 39.762329 28.296753 40.478516 L 35.328003 49.902344 L 50.904175 24.658203 C 51.718018 23.323608 52.759644 22.65625 54.029175 22.65625 C 54.973145 22.65625 55.827637 22.949219 56.592651 23.535156 C 57.357666 24.121094 57.740234 24.934937 57.740234 25.976563 C 57.740234 26.464844 57.618164 26.961304 57.373901 27.46582 C 57.129761 27.970337 56.877441 28.450562 56.617065 28.90625 L 39.185547 56.445313 C 38.306519 57.877563 37.085815 58.59375 35.523438 58.59375 Z"/>
+                                        <path id="Path" fill="#000000" stroke="none" d="M 39.82019 79.150391 C 45.223877 79.150391 50.302002 78.125 55.054565 76.074219 C 59.807129 74.023438 63.998291 71.175171 67.62793 67.529297 C 71.257446 63.883423 74.105713 59.684204 76.172852 54.931641 C 78.239868 50.179077 79.273438 45.117188 79.273438 39.746094 C 79.273438 34.375 78.239868 29.31311 76.172852 24.560547 C 74.105713 19.807983 71.249268 15.608765 67.603394 11.962891 C 63.95752 8.317017 59.758423 5.46875 55.005859 3.417969 C 50.253296 1.367188 45.175049 0.341797 39.771362 0.341797 C 34.400391 0.341797 29.338501 1.367188 24.585938 3.417969 C 19.833374 5.46875 15.650391 8.317017 12.036987 11.962891 C 8.423706 15.608765 5.583496 19.807983 3.516479 24.560547 C 1.449463 29.31311 0.415894 34.375 0.415894 39.746094 C 0.415894 45.117188 1.449463 50.179077 3.516479 54.931641 C 5.583496 59.684204 8.431885 63.883423 12.061401 67.529297 C 15.69104 71.175171 19.88208 74.023438 24.634644 76.074219 C 29.387207 78.125 34.449097 79.150391 39.82019 79.150391 Z M 35.523438 58.59375 C 34.774658 58.59375 34.082886 58.422852 33.448242 58.081055 C 32.813354 57.739258 32.203003 57.19397 31.617065 56.445313 L 22.535156 45.068359 C 21.85144 44.189453 21.509644 43.245483 21.509644 42.236328 C 21.509644 41.259766 21.843384 40.413452 22.510742 39.697266 C 23.177979 38.981079 24.016113 38.623047 25.025269 38.623047 C 25.643799 38.623047 26.213379 38.753296 26.734253 39.013672 C 27.255127 39.274048 27.775879 39.762329 28.296753 40.478516 L 35.328003 49.902344 L 50.904175 24.658203 C 51.718018 23.323608 52.759644 22.65625 54.029175 22.65625 C 54.973145 22.65625 55.827637 22.949219 56.592651 23.535156 C 57.357666 24.121094 57.740234 24.934937 57.740234 25.976563 C 57.740234 26.464844 57.618164 26.961304 57.373901 27.46582 C 57.129761 27.970337 56.877441 28.450562 56.617065 28.90625 L 39.185547 56.445313 C 38.306519 57.877563 37.085815 58.59375 35.523438 58.59375 Z" />
                                     </g>
                                 </svg>
                             </div>

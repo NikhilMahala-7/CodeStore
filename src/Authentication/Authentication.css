@@ -33,7 +33,6 @@
     }
     .Auth-Card-Top-Box{
         border-bottom : 1px solid rgb(187, 171, 171) ; 
-        box-shadow : 0 1px 2px rgba(0, 0, 0, 0.1) ;
         position : relative ; 
         display : flex ; 
         align-items : center ; 
@@ -65,10 +64,14 @@
     }
     .Auth-Card-Bottom-Box{
         border-top : 1px solid rgb(187, 171, 171) ; 
-        box-shadow : 0 -1px 2px rgba(0, 0, 0, 0.1) ;
         display : flex ; 
         align-items : center ; 
         justify-content : space-between ;
+
+        .Login-Signup-Switch.NoSwitch{
+            scale : 0 ; 
+            transition : scale 0.2s ease ; 
+        }
         
         .Login-Signup-Switch{
             margin-left : 30px ; 
@@ -78,7 +81,9 @@
             background-color : rgb(187, 171, 171) ; 
             border-radius : 20px ;
             position : relative ; 
-            display : flex ; 
+            display : flex ;
+            scale : 1 ; 
+            transition : scale 0.2s ease ;  
             
             div{
                 display : inline-block ; 
@@ -104,7 +109,7 @@
                     font-size : 12px !important; 
                     font-weight : 550;
                     background-color: transparent;
-                    transition : color 0.3s ease ;
+                    transition : color 0.2s ease ;
                     pointer-events : none ;  
                 }
 
@@ -234,7 +239,8 @@
 
     .Auth-Card-Content-Box{
         width : 670px ; 
-        height : calc(600px - 65.2px * 2) ; 
+        height : calc(600px - 65.2px * 2) ;
+        position : relative ;  
     }
 }
 

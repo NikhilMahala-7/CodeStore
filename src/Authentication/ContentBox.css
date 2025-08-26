@@ -1,0 +1,236 @@
+.Auth-Card-Content-Box {
+    --Progress: 0;
+
+    .Pipeline {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background: var(--Primary-Color);
+        transition: opacity 0.2s ease;
+
+        .PipelineSlider {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-wrap: nowrap;
+            overflow: hidden;
+
+            .PipelineComponent {
+                height: inherit;
+                width: inherit;
+                flex-shrink: 0;
+                transform: translate(calc(var(--Progress) * -100%), 0%);
+                transition: transform 0.3s ease;
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+}
+
+
+.Login-Forgot-Password{
+    position : absolute ; 
+    display : grid ; 
+    grid-template-columns : 90px 231px ;
+    transform : translate(-20px , 0%) ;  
+    height : 24px ; 
+    gap : 23px;
+    width : calc(344px) ; 
+    top : 260px ;
+    font-family : "CodeStoreText" ; 
+    font-weight : 650 ; 
+    user-select : none ; 
+    pointer-events : none ;
+    font-size : 12px ; 
+    color : rgb(0,0,0,0.5) ; 
+
+    .Login-Forgot-Wrapper{
+        width : 231px ; 
+        height : 15px ; 
+        display : flex ; 
+        justify-content : space-between ; 
+        align-items : center ; 
+    }
+
+    #Forgot-Password{
+        font-weight : 500 ;
+        font-size : 10px ; 
+        display : inline-block ; 
+        transform : translate(0% , -1px) ;
+        color : rgb(58, 58, 252) ;  
+        user-select : none ; 
+        pointer-events : all ; 
+        cursor : pointer ; 
+        margin-right : 5px;  
+    }
+
+
+    .Show-Hide-Password-Toggle.Hide{
+        background : rgb(145, 143, 143 , 0.6) ; /*rgba(64, 81, 231, 0.7)*/
+        transition : all 0.2s ease ;
+        cursor : pointer ; 
+        pointer-events : all ;  
+
+        span{
+            left : 2px ; 
+            pointer-events : none ;
+            transition : all 0.2s ease ;  
+        }
+    }
+
+    .Show-Hide-Password-Toggle{
+        height : 14px ;
+        width : 28px ; 
+        background : rgba(64, 81, 231, 0.7) ; /**/
+        margin-left : 12px ; 
+        border-radius : 7px ; 
+        position : relative ; 
+        transition : all 0.2s ease ;
+        cursor : pointer ; 
+        pointer-events : all ;  
+
+        span{
+            position : absolute ; 
+            height : 10px ; 
+            width : 15px ; 
+            border-radius : 5px ; 
+            background : rgb(240, 235, 235) ; 
+            top : 2px ; 
+            left : 11px ; 
+            box-shadow : 0 0 2px rgb(0,0,0 , 0.5) ; 
+            pointer-events : none ;
+            transition : all 0.2s ease ;  
+        }
+    }
+}
+
+.Input-Details-Container{
+    height : 24px ; 
+    overflow : hidden ; 
+    position : absolute ; 
+    display : flex; 
+    align-items : center ; 
+    justify-content : flex-start ; 
+    gap : 23px ; 
+    transform : translate(-20px , 0%) ; 
+
+    .Input-Property-Container{
+        width : 90px ; 
+        display : flex ; 
+        align-items : center ; 
+        justify-content : flex-end ;
+        
+        font-family : "CodeStoreText" ; 
+        font-weight : 650 ; 
+        user-select : none ; 
+        pointer-events : none ;
+        font-size : 12px ;
+        
+        span{
+            display : inline-block ; 
+            transform : translate(0% , 2px ) ; 
+            color : rgb(0,0,0,0.8) ; 
+            position : relative ; 
+        }
+    }
+}
+
+.Login-UserMail-Detail-Container{
+    top : 170px ; 
+}
+
+.Login-Password-Detail-Container{
+    top : 220px; 
+}
+
+.Auth-InputFieldWrapper {
+    height: 24px;
+    width: 231px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: rgb(145, 143, 143 , 0.6);
+    pointer-events: none;
+
+    input {
+        height: 24px;
+        width: 188px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-size: 13px;
+        margin-inline: 12px;
+        font-weight: 550;
+        padding: 0px;
+        pointer-events: all;
+        font-family: "CodeStoreText";
+        color : rgb(0,0,0,0.8) ;
+        letter-spacing : 0.2px ;  
+    }
+
+    input::placeholder{
+        color : rgb(48, 45, 45 , 0.5) ; 
+    }
+    input:focus {
+        border: none;
+        outline: none;
+    }
+
+    div.Value{
+        scale : 1 ; 
+        transition : scale 0.1s ease ; 
+    }
+
+    div {
+        pointer-events: all;
+        height: 13px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        position: relative;
+        transform : translate(0% , -0.5px) ; 
+        cursor : pointer ; 
+        scale : 0 ;
+        transition : scale 0.1s ease ;  
+
+        svg{
+            position : absolute ; 
+            pointer-events : none ; 
+            top : 0px ; 
+            height : 13px ; 
+            path {
+                fill : rgba(71, 67, 67, 0.6) ; 
+            }
+        }
+    }
+}
+
+
+
+
+.Auth-Card-Content-Box[pipeline="LoginPipeline"] {
+    .Auth-Card-Login-Pipeline {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .Auth-Card-Signup-Pipeline {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+.Auth-Card-Content-Box[pipeline="SignupPipeline"] {
+    .Auth-Card-Login-Pipeline {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .Auth-Card-Signup-Pipeline {
+        opacity: 1;
+        pointer-events: all;
+    }
+}
