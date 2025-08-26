@@ -1,0 +1,250 @@
+#Authentication-Big{
+    height : 100vh ;
+    width : 100vw ; 
+    overflow : hidden !important;
+    background : url("/public/Wallpapers/BigSur1.jpg") ; 
+    background-size : cover ;
+    background-position : top center;
+    position : relative ;
+    display : flex ; 
+    align-items : center ; 
+    justify-content : center;  
+
+    --Primary-Color : rgb(228, 221, 221) ; 
+    --TranslateXFactor : 0 ;
+    --TranslateYFactor : 0 ;
+
+    .Authentication-Card{
+        height : 600px ; 
+        width : 810px ; 
+        background : var(--Primary-Color) ;
+        border-radius : 17px ;
+        box-shadow : 0 0 13px rgb(0,0,0,0.7) , 
+                    inset 0 0 3px rgb(0,0,0 , 0.3) ;
+        display : flex ;
+        flex-wrap : wrap ;
+        justify-content : center ;
+        overflow : hidden ;   
+    }
+
+    .Auth-Card-Top-Box , .Auth-Card-Bottom-Box{
+        height : 65.2px ;
+        width : 810px ; 
+    }
+    .Auth-Card-Top-Box{
+        border-bottom : 1px solid rgb(187, 171, 171) ; 
+        box-shadow : 0 1px 2px rgba(0, 0, 0, 0.1) ;
+        position : relative ; 
+        display : flex ; 
+        align-items : center ; 
+        justify-content : center ; 
+        user-select : none ; 
+        pointer-events : none ; 
+        font-size : 22px ;
+        font-weight : 600;
+        font-family : "CodeStoreDisplay" ;
+        color : rgb(0 , 0 , 0 , 0.5);
+        
+        .Auth-Card-Status-Box{
+            position : relative ; 
+            width : 100%;
+            display : flex; 
+            justify-content : flex-start ;
+            height : 26px ;
+            flex-direction : column ; 
+            align-items : center ;
+            overflow : hidden ;
+            
+            span{
+                display : inline-block ; 
+                height : 26px;
+                transform :translate(0% , calc(var(--TranslateYFactor) * -100%)) ;
+                transition : transform 0.25s ease-out ;  
+            }   
+        }
+    }
+    .Auth-Card-Bottom-Box{
+        border-top : 1px solid rgb(187, 171, 171) ; 
+        box-shadow : 0 -1px 2px rgba(0, 0, 0, 0.1) ;
+        display : flex ; 
+        align-items : center ; 
+        justify-content : space-between ;
+        
+        .Login-Signup-Switch{
+            margin-left : 30px ; 
+            height : 40px ; 
+            width : 140px; 
+            padding-inline : 5px ; 
+            background-color : rgb(187, 171, 171) ; 
+            border-radius : 20px ;
+            position : relative ; 
+            display : flex ; 
+            
+            div{
+                display : inline-block ; 
+            }
+
+            .Switch{
+                height : 40px ; 
+                width : 60px;
+                margin-inline : 5px ; 
+                border-radius : 10px; 
+                z-index : 2 ; 
+                display : flex ;
+                align-items : center ; 
+                justify-content : center ;
+                background-color: transparent; 
+                position : relative ;
+                cursor : pointer ;  
+
+                span{
+                    mix-blend-mode: multiply ; 
+                    user-select : none ; 
+                    display : inline-block ;
+                    font-size : 12px !important; 
+                    font-weight : 550;
+                    background-color: transparent;
+                    transition : color 0.3s ease ;
+                    pointer-events : none ;  
+                }
+
+                .s1{
+                    color : rgb(calc(200 * (1 - var(--TranslateXFactor))) , calc(200 * (1 - var(--TranslateXFactor))) , calc(200 * (1 - var(--TranslateXFactor)))); 
+                }
+        
+                .s2{
+                    color : rgb(calc(200 * (var(--TranslateXFactor))) , calc(200 * (var(--TranslateXFactor))) , calc(200 * (var(--TranslateXFactor)))); 
+                }
+            }
+
+            .Switch-Selector{
+                height : 30px ; 
+                width : 70px ;
+                margin-block : 5px ; 
+                border-radius : 15px ;
+                margin-inline : 0px ; 
+                position : absolute ;
+                background-color : rgb(49, 46, 46); 
+                pointer-events : none ;
+                z-index : 1 ;
+                transform : translate(calc(var(--TranslateXFactor) * 100%) , 0%) ;
+                transition : transform 0.2s ease ;  
+            }
+        }
+    }
+
+    .Proceed-Prev-Button-Container{
+        margin-right : 30px ;
+        display : flex;  
+    }
+
+
+    .Proceed-Button-Preview{
+        height : 30px ; aspect-ratio : 1 ; 
+        border-radius : 50% ; 
+        position : relative ; 
+        cursor : pointer ; 
+
+        .Procced-Button-Progress-Container{
+            height : 30px ; aspect-ratio : 1 ; 
+            position : absolute ; 
+            border-radius : 50% ; 
+            background : rgba(48, 45, 235, 0.829) ; 
+            top : 0px ;
+            display : none ;
+            align-items : center ; 
+            justify-content : center ;
+            
+            .Loading-Dot{
+                height : 18px; 
+                width : 18px ; 
+                border-radius : 50% ; 
+                background : rgb(214, 205, 205) ; 
+                scale : 0.8 ; 
+                animation : pulse 1s ease-in-out forwards infinite ; 
+            }
+        }
+        
+        g{
+            transform : translate(0px , 0px) ;
+            scale : 1.01 ;  
+        }
+        path{
+            fill : rgba(48, 45, 235, 0.829) ; 
+        }
+    }
+
+    .Proceed-Button-Preview.InProgress{ 
+        cursor : wait ; 
+        .Procced-Button-Progress-Container{
+            display : flex !important ;  
+        }
+        .Procced-Button-SVG-Container{
+            display : none ; 
+        }
+    }
+
+    .Proceed-Button-Preview.Pale{ 
+        cursor : not-allowed ; 
+        path{
+            fill : rgba(82, 81, 88, 0.829) ; 
+        }
+    }
+
+    .Previous-Button-Container.Pale{
+        background : rgba(82, 81, 88, 0.829) ; 
+    }
+
+    .Previous-Button-Container.CanGoBack{
+        scale : 1 ; 
+        transition : scale 0.2s ease ; 
+    }
+
+    .Previous-Button-Container{
+        height : 30px ; 
+        aspect-ratio : 1 ;
+        background : rgba(48, 45, 235, 0.829) ; 
+        border-radius : 50% ; 
+        margin-right : 7.5px ;
+        position : relative ; 
+        cursor : pointer ; 
+        box-shadow : 0 0 2px rgb(0,0,0,0.5) ;
+        scale : 0 ; 
+        transition : scale 0.2s ease ;  
+
+        span{
+            display : inline-block ;
+            height : calc(30px * 8 / 115) ; 
+            border-radius : calc(30px * 4 / 115) ;
+            width : calc(30px * 43 / 115) ; 
+            background : rgb(228, 221, 221) ; 
+            left : calc(30px * 40 / 115) ; 
+            position : absolute ; 
+            top : calc(15px - (30px * 4 / 115)) ; 
+            transform-origin : left center ; 
+            transform : rotateZ(-39deg) translate(0% , 0.5px);
+            pointer-events : none ;  
+        }
+
+        span:nth-child(1){
+            transform : rotateZ(39deg) translate(0% , -0.5px);
+
+        }
+    }
+
+    .Auth-Card-Content-Box{
+        width : 670px ; 
+        height : calc(600px - 65.2px * 2) ; 
+    }
+}
+
+
+@keyframes pulse {
+    from , to {
+        scale : 0.8 ; 
+    }
+
+    50% {
+        scale : 0.3 ; 
+    }
+}

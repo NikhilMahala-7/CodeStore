@@ -101,3 +101,67 @@ code {
   font-weight: 900;
   src: url("/public/Fonts/San-Fransisco/SFProDisplay-Heavy.ttf");
 }
+
+/*
+
+#Dock-Container{
+    --Width: 40px;
+    --Factor1_4: 0.25;
+    --Factor1_2: 0.5;
+    --Factor1_3: 0.333;
+    z-index : 10 ; 
+
+    height: calc(var(--Width) * (var(--Factor1_3) + var(--Factor1_4) + 1));
+    max-width: calc(1240px - (var(--Width) * var(--Factor1_2)));
+    padding-inline: calc(var(--Width) * var(--Factor1_4));
+
+    border-radius: calc((var(--Width) * (var(--Factor1_3) + var(--Factor1_4) + 1)) * 0.25);
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: calc(var(--Width) * var(--Factor1_3));
+    transform : transalteZ(0) ; 
+
+    background-color: rgb(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    filter: contrast(1) brightness(1.3) sepia(0.2);
+    box-shadow: inset 0 0 2px rgb(255, 255, 255, 0.1),
+        inset 1px 1px 2px rgb(255, 255, 255, 0.1),
+        1px 1px 10px rgb(0, 0, 0, 0.4);
+    
+    position : absolute ; 
+    bottom : 10px; 
+    left : 50% ; 
+    transform : translate(-50% , 0%) ;
+
+    .Dock-Item{
+        width: var(--Width);
+        aspect-ratio: 1;
+        margin-bottom: calc(var(--Width) * var(--Factor1_3));
+        position: relative;
+        cursor : pointer ;
+
+        .App-Dock-Icon-Container{
+            height : inherit ; 
+            width : inherit ; 
+            background-color : transparent ;
+            position : absolute ; 
+            top : 0px ; 
+            left : 0px ; 
+            overflow: hidden ; 
+            pointer-events : none ;
+            display : flex ; 
+            align-items : center ; 
+            justify-content : center ;
+            
+            img{
+                height : inherit ; 
+                width : inherit ; 
+                object-fit : cover ; 
+                scale : 1.22 ; 
+                user-select : none ; 
+            }
+        }
+    }
+}
+*/
