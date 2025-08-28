@@ -52,8 +52,8 @@
             overflow: hidden;
 
             span {
-                transform: translate(calc(1 - (var(--StatusSpanCount)) * -100%), 0%);
-                transition: all 0.3s ease;
+                transform: translate(0% , calc( (1 - var(--StatusSpanCount)) * 100%));
+                transition: all 0.25s ease;
             }
         }
     }
@@ -112,7 +112,7 @@
                     pointer-events: none;
                     user-select: none;
                     transform: translate(0%, 1px);
-                    transition: color 0.2s ease;
+                    transition: color 0.15s ease;
                 }
             }
 
@@ -136,7 +136,7 @@
                 border-radius: 15px;
                 top: 5px;
                 left: 5px;
-                transition: all 0.25s ease;
+                transition: all 0.2s ease;
                 pointer-events: none;
                 background: var(--Switch-Background);
                 z-index: 1 !important;

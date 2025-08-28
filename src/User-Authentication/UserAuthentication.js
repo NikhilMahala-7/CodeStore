@@ -1,3 +1,5 @@
+import { UserAuthentication as UAuth } from "./UAuth"
+import {useLayoutEffect} from "react"
 import "./UAuth.css"
 import "./UAuth2.css"
 
@@ -31,14 +33,7 @@ const  LocalSVGImport = (name) => {
     }
 }
 
-// LoginUserMailInput       Pipeline => Login
-// LoginUserPassInput       Pipeline => Login
-// LoginUserOTPInput        Pipeline => Login
-// LoginUserResetPassInput  Pipeline => Login
 
-// SignupUserMailInput      Pipeline => Signup
-// SignupUserPassInput      Pipeline => Signup
-// SingupUserOTPInput       Pipeline => Signup
 
 
 // CancelButtons 
@@ -47,7 +42,7 @@ function GenerateInputField (props) {
     return (
         <div className="GeneratedInputFieldContainer">
             <input type={props.type} pipeline={props.pipeline} id={props.id} placeholder={props.placeholder} className={props.class} spellCheck="false"/>
-            <div className={props.CancelClassName} pipeline={props.pipeline} id={props.id+"Clear"}>
+            <div className={props.CancelClassName} pipeline={props.pipeline} id={props.id+"Clear"} length="0">
                 {LocalSVGImport("Cancel")}
             </div>
         </div>
@@ -55,6 +50,14 @@ function GenerateInputField (props) {
 }
 
 const UserAuthentication = () => {
+
+    useLayoutEffect(() => {
+        var Auth = new UAuth()
+
+        return () => {
+            Auth.Cleanup()
+        }
+    } , [])
     return (
         <div id="Authentication-MainPage">
             <div id="Authentication-Card">
@@ -78,11 +81,18 @@ const UserAuthentication = () => {
                                 </div>
                                 <div className="InputPassFieldToggle">
                                     <span className="ToggleName">Show Password</span>
-                                    <div className="InputPassFieldToogleSwitch" binary="0" input-ref="LoginUserPassInput">
+                                    <div className="InputPassFieldToogleSwitch" binary="0" input-ref="LoginUserPassInput" id="LoginUserPassInputToggle">
                                         <span></span>
                                     </div>
                                 </div>
                                 <div id="ForgotPassword"><span>Forgot password ?</span></div>
+                                <div className="KnowMoreBallWrapper">
+                                    <div className="KnowMoreBallContainer">
+                                        <div className="KnowMoreBall">
+                                            <span>i</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div className="Pipeline-Sliding-Window" id="ComplexLoginWindow"  allow-position-1="false">
                                 <div className="GeneratedInputFieldWrapper" position="0">
@@ -95,7 +105,7 @@ const UserAuthentication = () => {
                                 </div>
                                 <div className="InputPassFieldToggle">
                                     <span className="ToggleName">Show Password</span>
-                                    <div className="InputPassFieldToogleSwitch" binary="0" input-ref="LoginUserResetPassInput">
+                                    <div className="InputPassFieldToogleSwitch" binary="0" input-ref="LoginUserResetPassInput" id="LoginUserResetPassInputToggle">
                                         <span></span>
                                     </div>
                                 </div>
@@ -108,7 +118,7 @@ const UserAuthentication = () => {
                             <div className="Pipeline-Sliding-Window">
                                 <div className="GeneratedInputFieldWrapper" position="0">
                                     <div className="InputFieldName"><span>UserMail</span></div>
-                                    {GenerateInputField({type : "text" , pipeline : "Signup" , id : "SignupUserMailInput" , placeholder : "hello@world.com" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton"})}
+                                    {GenerateInputField({type : "text" , pipeline : "Signup" , id : "SignupUserMailInput" , placeholder : "eg : hello@world.com" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton"})}
                                 </div>
                                 <div className="GeneratedInputFieldWrapper" position="1">
                                     <div className="InputFieldName"><span>Password</span></div>
@@ -116,7 +126,7 @@ const UserAuthentication = () => {
                                 </div>
                                 <div className="InputPassFieldToggle">
                                     <span className="ToggleName">Show Password</span>
-                                    <div className="InputPassFieldToogleSwitch" binary="0" input-ref="SignupUserPassInput">
+                                    <div className="InputPassFieldToogleSwitch" binary="0" input-ref="SignupUserPassInput" id="SignupUserPassInputToggle">
                                         <span></span>
                                     </div>
                                 </div>
@@ -124,7 +134,7 @@ const UserAuthentication = () => {
                             <div className="Pipeline-Sliding-Window">
                                 <div className="GeneratedInputFieldWrapper" position="0">
                                     <div className="InputFieldName"><span>OTP</span></div>
-                                    {GenerateInputField({type : "text" , pipeline : "Signup" , id : "SingupUserOTPInput" , placeholder : "hello@world.com" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton"})}
+                                    {GenerateInputField({type : "text" , pipeline : "Signup" , id : "SingupUserOTPInput" , placeholder : "000000" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton"})}
                                 </div>
                             </div>
                         </div>
