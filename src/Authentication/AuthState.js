@@ -1,3 +1,8 @@
+
+
+
+
+
 export class AuthState {
     constructor(){
         this.InLoginState = true ;
@@ -26,9 +31,7 @@ export class AuthState {
                 Pass : "" , 
                 OTP : "" , 
                 ForgotPassword : false , 
-                ResetOTP : "" , 
-                RPass : "" , 
-                CPass : "" , 
+                NewPass : "" , 
             }  , 
             "SignupPipeline" :{
                 Mail : "" , 
@@ -74,12 +77,13 @@ export class AuthState {
         var clearBtn = document.getElementById(id.slice(0 , id.length - 5) + "Cancel") ;
         var pipeline = (element.id.slice(0 , 5) === "Login") ? "LoginPipeline" : "SignupPipeline"
         var Toggle = document.getElementById(id.slice(0 , id.length - 5) + "Toggle")
-        Toggle.classList.add("Hide") ; 
+        Toggle?.classList.add("Hide") ; 
         var offset = 6 ; 
         if(pipeline === "LoginPipeline"){
             offset = 5 ; 
         }
-        this.Credentials[pipeline][id.slice(offset , id.length - 5)] = value ;
+        var key = id.slice(offset , id.length - 5) 
+        this.Credentials[pipeline][key] = value ;
         if(value){
             clearBtn?.classList.add("Value")
         }else{
@@ -95,10 +99,10 @@ export class AuthState {
             this.InLoginState = !this.InLoginState ;
             
             if(IsLogin){
-                this.AnimateStatusBox("Login is going to be done" , 0);
+                this.AnimateStatusBox("Enter your details to log in" , 0);
                 this.ChangePipeline("LoginPipeline")
             }else{
-                this.AnimateStatusBox("Signup is going to be done" , 1);
+                this.AnimateStatusBox("Enter your details to sign up" , 1);
                 this.ChangePipeline("SignupPipeline")
             }
         }
@@ -162,6 +166,17 @@ export class AuthState {
     ChangePipeline(pipeline){
         this.Pipeline = pipeline ;
         this.ContentBox.setAttribute("pipeline" , pipeline) ; 
+    }
+
+    CleanupCredentials(pipeline , key){
+        this.Credentials[pipeline][key] = ""
+        var Start = "Signup" ; 
+        var End = key + "Input" ; 
+        if(pipeline === "LoginPipeline"){
+            Start = "Login"
+        }
+
+        this.MainElement.querySelector("#" + Start + End).value = 0; 
     }
 
 

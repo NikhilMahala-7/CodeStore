@@ -1,0 +1,236 @@
+.Authentication-Content-Error-Container{
+    height : 100px;
+    width : 100% ; 
+    z-index : 3 ; 
+    position : relative ;
+    pointer-events : none ; 
+    user-select : none ; 
+    background : rgba(255, 0, 0, 0.2) ; 
+}
+
+#Authentication-Card-Content-Box[pipeline="Login"]{
+    .Authentication-Signup-Pipeline-Content-Box{
+        opacity : 0 !important; 
+        pointer-events : none ; 
+
+        input , div {
+            pointer-events : none ; 
+        }
+    }
+}
+.Pipeline-Content-Box{
+    height : 100% ; 
+    width : 80%   ; 
+    position : absolute ; 
+    top : 0px; 
+    left : 10%; 
+    overflow : hidden; 
+    background : var(--Auth-Card-Background-Color) ; 
+    opacity : 1;
+    transition : opacity 0.2s ease ; 
+
+    .Pipeline-Content-Sliding-Window-Container{
+        height : 100% ; 
+        width : 100% ; 
+        display : flex ; 
+        align-items : center ; 
+        justify-content : flex-start ; 
+        flex-wrap : nowrap ; 
+
+        .Pipeline-Sliding-Window{
+            flex-shrink : 0 ; 
+            height : 100% ; 
+            width : 100% ; 
+            transform : translate(calc(var(--ProgressCount) * -100%) , 0%) ;
+            transition : all 0.2s ease ; 
+            position : relative ; 
+        }
+    }
+}
+
+.Pipeline-Sliding-Window[allow-position-1="false"]{
+    .GeneratedInputFieldWrapper[position="1"]{
+        display : none ; 
+    }
+
+    .InputPassFieldToggle{
+        display : none ; 
+    }
+}
+
+.Pipeline-Sliding-Window{
+
+    #ForgotPassword{
+        position : absolute ; 
+        top : calc(239px) ; 
+        height : 14px ; 
+        font-size : 10px;
+        font-weight : 500; 
+        left : calc(110px + 100px + 23px + 231px - 95px) ; 
+        cursor : pointer ; 
+        color : rgb(58, 58, 252) ; 
+
+        span{
+            user-select : none ; 
+            pointer-events : none ;
+            position : relative ;  
+        }
+
+        span::after{
+            width : 100% ; 
+            height : 1px ; 
+            position : absolute ; 
+            bottom : -3px ; 
+            content : "" ; 
+            background : rgb(58, 58, 252 , 0.7) ; 
+            left : -0% ; 
+            scale : 0  1; 
+            transition : scale 0.15s ease ; 
+        }
+    }
+
+    #ForgotPassword:hover{
+        span::after{
+            scale : 1 1 ; 
+        }
+    }
+
+    .InputPassFieldToggle{
+        display : grid ; 
+        position : absolute ; 
+        top : 240px ; 
+        left : 110px ; 
+        height : 14px; 
+        width : calc(231px + 23px + 100px) ; 
+        grid-template-columns : 100px 231px ;
+        column-gap : 23px ;
+        font-size : 12px; 
+        font-weight : 650 ;
+        color : rgb(0,0,0,0.5) ; 
+
+        .ToggleName{
+            justify-self : end ; 
+            user-select : none ; 
+        }
+
+
+
+        .InputPassFieldToogleSwitch[binary="1"]{
+            background : rgba(64, 81, 231, 0.7) ; 
+
+            span{
+                left : 11px ; 
+                background : rgb(255,255,255,0.9) ; 
+            }
+        }
+
+        .InputPassFieldToogleSwitch{
+            justify-self : start ; 
+            margin-left : 12px ; 
+            height : 14px ; 
+            width : 28px ; 
+            border-radius : 7px ; 
+            background-color : rgb(190 , 190 , 190) ; 
+            position : relative ;
+            transition : all 0.2s ease ;  
+            cursor : pointer ; 
+
+            span{
+                display : inline-block; 
+                position : absolute ; 
+                height : 10px ; 
+                width : 15px ;
+                left : 2px ;
+                top : 2px ; 
+                background : rgb(255,255,255,0.7) ; 
+                pointer-events : none ; 
+                border-radius : 5px ; 
+                box-shadow : 0 0 2px rgb(0,0,0,0.3) ; 
+                transition : all 0.2s ease ;  
+            }
+        }
+    }
+
+    .GeneratedInputFieldWrapper[position="1"]{
+        top : 200px ; 
+    }
+
+    .GeneratedInputFieldWrapper{
+        top : 150px ; 
+        position : absolute ; 
+        display : flex; 
+        align-items : center ; 
+        justify-content : center ; 
+        gap : 23px ; 
+        left : 110px ; 
+        z-index : 1 ; 
+
+
+        .InputFieldName {
+            height : 24px ;
+            width : 100px ; 
+            display : flex; 
+            align-items : center ; 
+            justify-content : flex-end ; 
+
+            user-select : none ; 
+            pointer-events : none ; 
+            font-size : 12px ; 
+            font-weight : 650 ; 
+            color : rgb(0,0,0,0.65) ; 
+        }
+
+        .GeneratedInputFieldContainer{
+            position : relative ; 
+            height : 24px; 
+            width : 231px ; 
+            border-radius : 5px ; 
+            background-color : rgb(190 , 190 , 190) ; 
+            overflow : hidden ; 
+
+            input{
+                position : absolute ; 
+                top : -1px ; left : 12px ; 
+                height : 24px ; width : 188px;
+                background : inherit ; 
+                outline : none ; border : none ; 
+                font-size : 12px ;
+                font-family : "CodeStoreText" ; 
+                font-weight : 550 ; 
+                letter-spacing : 0.14px ; 
+                color : rgb(0,0,0,0.8) ; 
+            }
+
+            input:focus {
+                border : none ; border : none ; 
+            }
+
+            div.InputHasValue{
+                scale : 1 ; 
+                transition : all 0.24s ease ; 
+            }
+            div {
+                cursor : pointer ; 
+                height : 13px ;
+                width : 13px ;
+                scale : 0 ; 
+                transition : all 0.24s ease ; 
+                position : absolute ; 
+                top : calc(5.5px) ; 
+                right : 6px ; 
+
+                svg{
+                    height : 13px;
+                    width : 13px; 
+                    pointer-events : none ;
+                    transform : translate(0% , -2px) ; 
+
+                    path {
+                        fill : rgb(0,0,0,0.5) ; 
+                    }
+                }
+            }
+        }
+
+    }
+}

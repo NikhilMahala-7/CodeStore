@@ -30,7 +30,7 @@ const Authentication = () => {
             <div className="Authentication-Card">
                 <div className="Auth-Card-Top-Box">
                     <div className="Auth-Card-Status-Box" id="AuthCardStatusBox">
-                        <span>Fill in details to login</span>
+                        <span>Enter your details to log in</span>
                     </div>
                 </div>
                 <div className="Auth-Card-Content-Box" pipeline="LoginPipeline">
@@ -55,7 +55,7 @@ const Authentication = () => {
                                     </div>
                                 </div>
                                 <div className="Login-Forgot-Password">
-                                    <span>Hide Password</span>
+                                    <span>Show Password</span>
                                     <div className="Login-Forgot-Wrapper">
                                         <div className="Show-Hide-Password-Toggle Hide" id="LoginPassToggle">
                                             <span></span>
@@ -66,14 +66,76 @@ const Authentication = () => {
                             </div>
 
 
-                            <div className="PipelineComponent"></div>
-                            <div className="PipelineComponent"></div>
+                            <div className="PipelineComponent">
+                                <div className="Input-Details-Container OTP-Detail-Container">
+                                    <div className="Input-Property-Container">
+                                        <span>OTP</span>
+                                    </div>
+                                    <div className="Input-Feild-Wrapper">
+                                        {InputFeild({ Pipeline : "Login" , Id: "Login-InputFeild-Password", inputType: "text" , placeHolder: "", CancelId: "LoginOTPCancel" , inputId : "LoginOTPInput" })}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="PipelineComponent">
+
+                                <div className="Input-Details-Container Login-Password-Detail-Container">
+                                    <div className="Input-Property-Container">
+                                        <span>New Password</span>
+                                    </div>
+                                    <div className="Input-Feild-Wrapper">
+                                        {InputFeild({ Pipeline : "Login" , Id: "Login-InputFeild-Password", inputType: "password", placeHolder: "#", CancelId: "LoginNewPassCancel" , inputId : "LoginNewPassInput" })}
+                                    </div>
+                                </div>
+                                <div className="Login-Forgot-Password">
+                                    <span>Show Password</span>
+                                    <div className="Login-Forgot-Wrapper">
+                                        <div className="Show-Hide-Password-Toggle Hide" id="LoginNewPassToggle">
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="Pipeline Auth-Card-Signup-Pipeline">
                         <div className="PipelineSlider">
-                            <div className="PipelineComponent"></div>
-                            <div className="PipelineComponent"></div>
+                            <div className="PipelineComponent">
+                                <div className="Input-Details-Container Login-UserMail-Detail-Container">
+                                    <div className="Input-Property-Container">
+                                        <span>Usermail</span>
+                                    </div>
+                                    <div className="Input-Feild-Wrapper">
+                                        {InputFeild({ Pipeline : "Signup" , Id: "Signup-InputFeild-UserName", inputType: "text", placeHolder: "eg : Jake@gmail.com", CancelId: "SignupMailCancel" , inputId : "SignupMailInput" })}
+                                    </div>
+                                </div>
+
+                                <div className="Input-Details-Container Login-Password-Detail-Container">
+                                    <div className="Input-Property-Container">
+                                        <span>Password</span>
+                                    </div>
+                                    <div className="Input-Feild-Wrapper">
+                                        {InputFeild({ Pipeline : "Signup" , Id: "Signup-InputFeild-Password", inputType: "password", placeHolder: "#", CancelId: "SignupPassCancel" , inputId : "SignupPassInput" })}
+                                    </div>
+                                </div>
+                                <div className="Login-Forgot-Password">
+                                    <span>Show Password</span>
+                                    <div className="Login-Forgot-Wrapper">
+                                        <div className="Show-Hide-Password-Toggle Hide" id="SignupPassToggle">
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="PipelineComponent">
+                                <div className="Input-Details-Container OTP-Detail-Container">
+                                    <div className="Input-Property-Container">
+                                        <span>OTP</span>
+                                    </div>
+                                    <div className="Input-Feild-Wrapper">
+                                        {InputFeild({ Pipeline : "Signup" , Id: "Login-InputFeild-Password", inputType: "text" , placeHolder: "", CancelId: "SignupOTPCancel" , inputId : "SignupOTPInput" })}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

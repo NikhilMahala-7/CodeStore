@@ -1,0 +1,271 @@
+#Authentication-MainPage {
+    display: flex;
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background: url("/public/Wallpapers/BigSur1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+}
+
+#Authentication-Card {
+    display: flex;
+    flex-wrap: wrap;
+    height: 600px;
+    width: 800px;
+
+    --StatusSpanCount: 1;
+    --ProgressCount :  0 ; 
+
+    --Auth-Card-Background-Color: rgb(228, 221, 221);
+    border-radius: 17px;
+    box-shadow: 0 0 13px rgb(0, 0, 0, 0.7),
+        inset 0 0 3px rgb(0, 0, 0, 0.3);
+    background: var(--Auth-Card-Background-Color);
+
+    #Authentication-Card-Status-Box {
+        height: 60px;
+        width: 100%;
+        border-radius: 17px 17px 0px 0px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid rgb(0, 0, 0, 0.3);
+        box-shadow: 0 1px rgb(0, 0, 0, 0.1);
+        z-index: 2;
+
+        #Authentication-Status-Container {
+            font-size: 20px;
+            font-weight: 650;
+            color: rgb(0, 0, 0, 0.55);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 24px;
+            pointer-events: none;
+            user-select: none;
+            overflow: hidden;
+
+            span {
+                transform: translate(calc(1 - (var(--StatusSpanCount)) * -100%), 0%);
+                transition: all 0.3s ease;
+            }
+        }
+    }
+
+    #Authentication-Card-Content-Box {
+        height: calc(100% - 128px);
+        width: 100%;
+        position: relative;
+        z-index: 1;
+    }
+
+    #Authentication-Card-Control-Box {
+        border-top: 1px solid rgb(0, 0, 0, 0.3);
+        box-shadow: 0 -1px rgb(0, 0, 0, 0.1);
+        height: 68px;
+        width: 100%;
+        position: relative;
+        border-radius: 0 0 17px 17px;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        --Control-Box-Margin: 30px;
+        /*More Color Schema*/
+        --Pale-Color: rgb(168, 158, 158);
+        --Switch-Background: rgb(37, 35, 35);
+
+        #PipeLineSwitchContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            width: 140px;
+            padding-inline: 5px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            background: var(--Pale-Color);
+            margin-left: var(--Control-Box-Margin);
+
+            div {
+                z-index: 2;
+                height: 40px;
+                width: 70px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor : pointer ; 
+
+                span {
+                    font-family: "CodeStoreText";
+                    font-size: 11px;
+                    font-weight: 600;
+                    letter-spacing: 0.2px;
+                    pointer-events: none;
+                    user-select: none;
+                    transform: translate(0%, 1px);
+                    transition: color 0.2s ease;
+                }
+            }
+
+            div[pipeline-role="Login"] {
+                span {
+                    color: var(--Pale-Color);
+                }
+            }
+
+
+            div[pipeline-role="Signup"] {
+                span {
+                    color: black;
+                }
+            }
+
+            .Pipeline-Moving-Div {
+                height: 30px;
+                width: 70px;
+                position: absolute;
+                border-radius: 15px;
+                top: 5px;
+                left: 5px;
+                transition: all 0.25s ease;
+                pointer-events: none;
+                background: var(--Switch-Background);
+                z-index: 1 !important;
+            }
+        }
+
+        #PipeLineSwitchContainer[pipeline="Signup"] {
+            div[pipeline-role="Signup"] {
+                span {
+                    color: var(--Pale-Color);
+                }
+            }
+
+            div[pipeline-role="Login"] {
+                span {
+                    color: black;
+                }
+            }
+
+            .Pipeline-Moving-Div {
+                left: 75px;
+            }
+        }
+
+        .Authentication-Control-Buttons-Container {
+            height: 30px;
+            width: calc(30px + 30px + 12px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-right: var(--Control-Box-Margin);
+
+            .Authentication-Control-Button {
+                height: 30px;
+                aspect-ratio: 1;
+                --ColorApplied: rgb(126, 115, 115);
+                border-radius: 50%;
+                position: relative;
+                scale: 1;
+                transform: translateZ(0px);
+                transition: all 0.28s ease;
+                background: rgb(201, 192, 192);
+
+                svg,
+                div {
+                    pointer-events: none;
+                    height: 30px;
+                    width: 30px;
+                    border-radius: 50%;
+                    position: absolute;
+                    left: 0px;
+                    top: 0px;
+                }
+
+                #Proceed-Button-Loading-Div {
+                    scale: 0;
+                    transition: all 0.2s ease;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center ; 
+                    gap : 2px ; 
+                    background: rgb(71, 100, 226);
+                    transform : translate(0% , 1px) ; 
+
+                    span {
+                        height: 4px;
+                        width : 2px;
+                        border-radius: 2px;
+                        background: white;
+                        animation: none ; 
+                    }
+
+                }
+
+                path {
+                    fill: var(--ColorApplied);
+                    transition: all 0.28s ease;
+                }
+            }
+
+            .Authentication-Control-Button[pale="false"] {
+                --ColorApplied: rgb(61, 91, 224) !important;
+                background: transparent;
+            }
+
+            .Authentication-Control-Button[scaled-down="true"] {
+                scale: 0;
+            }
+
+            .Authentication-Control-Button[loading="true"] {
+                #Proceed-Button-Loading-Div {
+                    scale: 1;
+                    transition: all 0.2s ease;
+
+                    span{
+                        animation: bounce 0.9s infinite ease  alternate;
+                    }
+
+                    span:nth-child(1) {
+                        animation-delay: 0.1s;
+                    }
+
+                    span:nth-child(2) {
+                        animation-delay: 0.2s;
+                    }
+
+                    span:nth-child(3) {
+                        animation-delay: 0.3s;
+                    }
+
+                    span:nth-child(4) {
+                        animation-delay: 0.4s;
+                    }
+
+                    span:nth-child(5) {
+                        animation-delay: 0.5s;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes bounce {
+    0%, 80%, 100% { 
+        transform: scaleY(0.3); 
+    }
+    40% { 
+        transform: scaleY(1.8); 
+    }
+}
+
