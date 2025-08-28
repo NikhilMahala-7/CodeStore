@@ -26,6 +26,13 @@ const  LocalSVGImport = (name) => {
             </svg>
         )
 
+        case "LocalTick" : 
+        return (
+            <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 28 28" fill="none">
+            <path d="M22.91 1.13884C23.662 -0.0190867 25.2101 -0.348418 26.368 0.403493C27.5258 1.1554 27.855 2.70358 27.1034 3.8615L12.2811 26.6867C12.2438 26.7441 12.202 26.7975 12.161 26.8508C12.0188 27.0596 11.8434 27.2513 11.6336 27.4152C10.5457 28.265 8.97484 28.0723 8.12484 26.9845L0.530113 17.2629C-0.319863 16.1749 -0.127177 14.6041 0.960777 13.7541C2.04871 12.9041 3.61947 13.0969 4.46957 14.1847L9.91293 21.1515L22.91 1.13884Z" fill="#B52C2C"/>
+            </svg>
+        )
+
         default  : 
         return (
             <div></div>
@@ -41,7 +48,7 @@ const  LocalSVGImport = (name) => {
 function GenerateInputField (props) {
     return (
         <div className="GeneratedInputFieldContainer">
-            <input type={props.type} pipeline={props.pipeline} id={props.id} placeholder={props.placeholder} className={props.class} spellCheck="false"/>
+            <input type={props.type} pipeline={props.pipeline} id={props.id} placeholder={props.placeholder} className={props.class} spellCheck="false" input-role={props.inputrole}/>
             <div className={props.CancelClassName} pipeline={props.pipeline} id={props.id+"Clear"} length="0">
                 {LocalSVGImport("Cancel")}
             </div>
@@ -72,12 +79,12 @@ const UserAuthentication = () => {
                         <div className="Pipeline-Content-Sliding-Window-Container">
                             <div className="Pipeline-Sliding-Window" allow-position-1="true">
                                 <div className="GeneratedInputFieldWrapper" position="0">
-                                    <div className="InputFieldName"><span>UserMail</span></div>
-                                    {GenerateInputField({type : "text" , pipeline : "Login" , id : "LoginUserMailInput" , placeholder : "eg : hello@world.com" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton"})}
+                                    <div className="InputFieldName"><span>UserEmail</span></div>
+                                    {GenerateInputField({type : "text" , pipeline : "Login" , id : "LoginUserMailInput" , placeholder : "eg : hello@world.com" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton" , inputrole : "LoginMail"})}
                                 </div>
                                 <div className="GeneratedInputFieldWrapper" position="1">
                                     <div className="InputFieldName"><span>Password</span></div>
-                                    {GenerateInputField({type : "password" , pipeline : "Login" , id : "LoginUserPassInput" , placeholder : "#" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton"})}
+                                    {GenerateInputField({type : "password" , pipeline : "Login" , id : "LoginUserPassInput" , placeholder : "#" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton" , inputrole : "LoginPass"})}
                                 </div>
                                 <div className="InputPassFieldToggle">
                                     <span className="ToggleName">Show Password</span>
@@ -86,10 +93,36 @@ const UserAuthentication = () => {
                                     </div>
                                 </div>
                                 <div id="ForgotPassword"><span>Forgot password ?</span></div>
-                                <div className="KnowMoreBallWrapper">
-                                    <div className="KnowMoreBallContainer">
-                                        <div className="KnowMoreBall">
-                                            <span>i</span>
+                                <div className="PeekInformation">
+                                    <div className="PeekInformation-Relative-Box">
+                                        <div className="PeekInformation-Arrow"></div>
+                                        <div className="PeekInformation-Content-Box">
+                                            <div className="Declaration-Span" id="LoginMailInfo" isvalid="false"><span>UserEmail</span></div>
+                                            <div className="Information-Property-Container">
+                                                <span>Must be valid email address</span>
+                                                <div className="PropertyFormatDivIndicator">{LocalSVGImport("LocalTick")}</div>
+                                            </div>
+                                            <div className="Declaration-Span" id="LoginPassInfo" haslengthmorethan8="false" haslengthlessthan20="true" hasuppercase="false" haslowercase="false" hasnumber="false"><span>Password</span></div>
+                                            <div className="Information-Property-Container">
+                                                <span>Must be at least 8 characters</span>
+                                                <div className="PropertyLen8DivIndicator">{LocalSVGImport("LocalTick")}</div>
+                                            </div>
+                                            <div className="Information-Property-Container">
+                                                <span>Must be at most 20 characters</span>
+                                                <div className="PropertyLen20DivIndicator">{LocalSVGImport("LocalTick")}</div>
+                                            </div>
+                                            <div className="Information-Property-Container">
+                                                <span>Must include an uppercase lette</span>
+                                                <div className="PropertyUpperCaseDivIndicator">{LocalSVGImport("LocalTick")}</div>
+                                            </div>
+                                            <div className="Information-Property-Container">
+                                                <span>Must include a lowercase letter</span>
+                                                <div className="PropertyLowerCaseDivIndicator">{LocalSVGImport("LocalTick")}</div>
+                                            </div>
+                                            <div className="Information-Property-Container">
+                                                <span>Must include a number</span>
+                                                <div className="PropertyNumberCaseDivIndicator">{LocalSVGImport("LocalTick")}</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -97,11 +130,11 @@ const UserAuthentication = () => {
                             <div className="Pipeline-Sliding-Window" id="ComplexLoginWindow"  allow-position-1="false">
                                 <div className="GeneratedInputFieldWrapper" position="0">
                                     <div className="InputFieldName"><span>OTP</span></div>
-                                    {GenerateInputField({type : "text" , pipeline : "Login" , id : "LoginUserOTPInput" , placeholder : "000000" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton"})}
+                                    {GenerateInputField({type : "text" , pipeline : "Login" , id : "LoginUserOTPInput" , placeholder : "000000" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton" , inputrole : "LoginOTP"})}
                                 </div>
                                 <div className="GeneratedInputFieldWrapper" position="1">
                                     <div className="InputFieldName"><span>New Password</span></div>
-                                    {GenerateInputField({type : "password" , pipeline : "Login" , id : "LoginUserResetPassInput" , placeholder : "#" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton"})}
+                                    {GenerateInputField({type : "password" , pipeline : "Login" , id : "LoginUserResetPassInput" , placeholder : "#" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton" , inputrole : "LoginResetPass"})}
                                 </div>
                                 <div className="InputPassFieldToggle">
                                     <span className="ToggleName">Show Password</span>
@@ -117,12 +150,12 @@ const UserAuthentication = () => {
                         <div className="Pipeline-Content-Sliding-Window-Container">
                             <div className="Pipeline-Sliding-Window">
                                 <div className="GeneratedInputFieldWrapper" position="0">
-                                    <div className="InputFieldName"><span>UserMail</span></div>
-                                    {GenerateInputField({type : "text" , pipeline : "Signup" , id : "SignupUserMailInput" , placeholder : "eg : hello@world.com" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton"})}
+                                    <div className="InputFieldName"><span>UserEmail</span></div>
+                                    {GenerateInputField({type : "text" , pipeline : "Signup" , id : "SignupUserMailInput" , placeholder : "eg : hello@world.com" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton" , inputrole : "SignupMail"})}
                                 </div>
                                 <div className="GeneratedInputFieldWrapper" position="1">
                                     <div className="InputFieldName"><span>Password</span></div>
-                                    {GenerateInputField({type : "password" , pipeline : "Signup" , id : "SignupUserPassInput" , placeholder : "#" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton"})}
+                                    {GenerateInputField({type : "password" , pipeline : "Signup" , id : "SignupUserPassInput" , placeholder : "#" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton" , inputrole : "SignupPass"})}
                                 </div>
                                 <div className="InputPassFieldToggle">
                                     <span className="ToggleName">Show Password</span>
@@ -134,7 +167,7 @@ const UserAuthentication = () => {
                             <div className="Pipeline-Sliding-Window">
                                 <div className="GeneratedInputFieldWrapper" position="0">
                                     <div className="InputFieldName"><span>OTP</span></div>
-                                    {GenerateInputField({type : "text" , pipeline : "Signup" , id : "SingupUserOTPInput" , placeholder : "000000" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton"})}
+                                    {GenerateInputField({type : "text" , pipeline : "Signup" , id : "SingupUserOTPInput" , placeholder : "000000" , className : "" , CancelClassName : "GeneratedInputFieldCancelButton" , inputrole : "SignupOTP"})}
                                 </div>
                             </div>
                         </div>

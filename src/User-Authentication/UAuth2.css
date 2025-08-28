@@ -1,273 +1,395 @@
-.Authentication-Content-Error-Container{
-    height : 100px;
-    width : 100% ; 
-    z-index : 3 ; 
-    position : relative ;
-    pointer-events : none ; 
-    user-select : none ; 
-    background : rgba(255, 0, 0, 0.2) ; 
+.Authentication-Content-Error-Container {
+    height: 100px;
+    width: 100%;
+    z-index: 3;
+    position: relative;
+    pointer-events: none;
+    user-select: none;
+    background: rgba(255, 0, 0, 0.2);
 }
 
-#Authentication-Card-Content-Box[pipeline="Login"]{
-    .Authentication-Signup-Pipeline-Content-Box{
-        opacity : 0 !important; 
-        pointer-events : none ; 
+#Authentication-Card-Content-Box[pipeline="Login"] {
+    .Authentication-Signup-Pipeline-Content-Box {
+        opacity: 0 !important;
+        pointer-events: none;
 
-        input , div {
-            pointer-events : none ; 
-        }
-    }
-}
-.Pipeline-Content-Box{
-    height : 100% ; 
-    width : 80%   ; 
-    position : absolute ; 
-    top : 0px; 
-    left : 10%; 
-    overflow : hidden; 
-    background : var(--Auth-Card-Background-Color) ; 
-    opacity : 1;
-    transition : opacity 0.2s ease ; 
-
-    .Pipeline-Content-Sliding-Window-Container{
-        height : 100% ; 
-        width : 100% ; 
-        display : flex ; 
-        align-items : center ; 
-        justify-content : flex-start ; 
-        flex-wrap : nowrap ; 
-
-        .Pipeline-Sliding-Window{
-            flex-shrink : 0 ; 
-            height : 100% ; 
-            width : 100% ; 
-            transform : translate(calc(var(--ProgressCount) * -100%) , 0%) ;
-            transition : all 0.2s ease ; 
-            position : relative ; 
+        input,
+        div {
+            pointer-events: none;
         }
     }
 }
 
-.Pipeline-Sliding-Window[allow-position-1="false"]{
-    .GeneratedInputFieldWrapper[position="1"]{
-        display : none ; 
-    }
+.Pipeline-Content-Box {
+    height: 100%;
+    width: 80%;
+    position: absolute;
+    top: 0px;
+    left: 10%;
+    overflow: hidden;
+    background: var(--Auth-Card-Background-Color);
+    opacity: 1;
+    transition: opacity 0.2s ease;
 
-    .InputPassFieldToggle{
-        display : none ; 
+    .Pipeline-Content-Sliding-Window-Container {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+
+        .Pipeline-Sliding-Window {
+            flex-shrink: 0;
+            height: 100%;
+            width: 100%;
+            transform: translate(calc(var(--ProgressCount) * -100%), 0%);
+            transition: all 0.2s ease;
+            position: relative;
+        }
     }
 }
 
-.Pipeline-Sliding-Window{
+.Pipeline-Sliding-Window[allow-position-1="false"] {
+    .GeneratedInputFieldWrapper[position="1"] {
+        display: none;
+    }
 
-    .KnowMoreBallWrapper{
-        height : 14px ;
-        width : 14px ;
-        position : absolute ; 
-        left : 20px ;
-        top : 240px ;
-        border-radius : 14px ; 
-        left : calc(110px + 100px + 23px + 12px + 28px + 30px) ; 
-        cursor : pointer ; 
+    .InputPassFieldToggle {
+        display: none;
+    }
+}
 
 
-        .KnowMoreBallContainer , .KnowMoreBall{
-            height : inherit ; 
-            width  : inherit ; 
-            border-radius : inherit ; 
-            position : relative ; 
-            pointer-events : none ; 
+
+
+
+.Pipeline-Sliding-Window {
+
+
+
+    #ForgotPassword {
+        position: absolute;
+        top: calc(239px);
+        height: 14px;
+        font-size: 10px;
+        font-weight: 500;
+        left: calc(110px + 100px + 23px + 231px - 95px);
+        cursor: pointer;
+        color: rgb(58, 58, 252);
+
+        span {
+            user-select: none;
+            pointer-events: none;
+            position: relative;
         }
 
-        .KnowMoreBall {
+        span::after {
+            width: 100%;
+            height: 1px;
+            position: absolute;
+            bottom: -3px;
+            content: "";
+            background: rgb(58, 58, 252, 0.7);
+            left: -0%;
+            scale: 0 1;
+            transition: scale 0.15s ease;
+        }
+    }
 
-            background : rgb(190 , 190 , 190) ; 
-            span{
-                position : absolute ; 
-                left : 50% ;
-                top : 50% ;
-                transform : translate(-35% , -51%) ;
-                font-size : 10px ;
-                font-weight : 600 ;
-                font-family : 'Times New Roman', Times, serif  ; 
-                pointer-events : none ; 
-                user-select : none ; 
-                color : rgb(0,0,0,0.7) ; 
+    #ForgotPassword:hover {
+        span::after {
+            scale: 1 1;
+        }
+    }
+
+    .InputPassFieldToggle {
+        display: grid;
+        position: absolute;
+        top: 240px;
+        left: 110px;
+        height: 14px;
+        width: calc(231px + 23px + 100px);
+        grid-template-columns: 100px 231px;
+        column-gap: 23px;
+        font-size: 12px;
+        font-weight: 650;
+        color: rgb(0, 0, 0, 0.5);
+
+        .ToggleName {
+            justify-self: end;
+            user-select: none;
+        }
+
+
+
+        .InputPassFieldToogleSwitch[binary="1"] {
+            background: rgba(64, 81, 231, 0.7);
+
+            span {
+                left: 11px;
+                background: rgb(255, 255, 255, 0.9);
+            }
+        }
+
+        .InputPassFieldToogleSwitch {
+            justify-self: start;
+            margin-left: 12px;
+            height: 14px;
+            width: 28px;
+            border-radius: 7px;
+            background-color: rgb(190, 190, 190);
+            position: relative;
+            transition: all 0.1s ease;
+            cursor: pointer;
+
+            span {
+                display: inline-block;
+                position: absolute;
+                height: 10px;
+                width: 15px;
+                left: 2px;
+                top: 2px;
+                background: rgb(255, 255, 255, 0.6);
+                pointer-events: none;
+                border-radius: 5px;
+                box-shadow: 0 0 2px rgb(0, 0, 0, 0.3);
+                transition: all 0.1s ease;
             }
         }
     }
 
-    #ForgotPassword{
-        position : absolute ; 
-        top : calc(239px) ; 
-        height : 14px ; 
-        font-size : 10px;
-        font-weight : 500; 
-        left : calc(110px + 100px + 23px + 231px - 95px) ; 
-        cursor : pointer ; 
-        color : rgb(58, 58, 252) ; 
-
-        span{
-            user-select : none ; 
-            pointer-events : none ;
-            position : relative ;  
-        }
-
-        span::after{
-            width : 100% ; 
-            height : 1px ; 
-            position : absolute ; 
-            bottom : -3px ; 
-            content : "" ; 
-            background : rgb(58, 58, 252 , 0.7) ; 
-            left : -0% ; 
-            scale : 0  1; 
-            transition : scale 0.15s ease ; 
-        }
+    .GeneratedInputFieldWrapper[position="1"] {
+        top: 200px;
     }
 
-    #ForgotPassword:hover{
-        span::after{
-            scale : 1 1 ; 
-        }
-    }
-
-    .InputPassFieldToggle{
-        display : grid ; 
-        position : absolute ; 
-        top : 240px ; 
-        left : 110px ; 
-        height : 14px; 
-        width : calc(231px + 23px + 100px) ; 
-        grid-template-columns : 100px 231px ;
-        column-gap : 23px ;
-        font-size : 12px; 
-        font-weight : 650 ;
-        color : rgb(0,0,0,0.5) ; 
-
-        .ToggleName{
-            justify-self : end ; 
-            user-select : none ; 
-        }
-
-
-
-        .InputPassFieldToogleSwitch[binary="1"]{
-            background : rgba(64, 81, 231, 0.7) ; 
-
-            span{
-                left : 11px ; 
-                background : rgb(255,255,255,0.9) ; 
-            }
-        }
-
-        .InputPassFieldToogleSwitch{
-            justify-self : start ; 
-            margin-left : 12px ; 
-            height : 14px ; 
-            width : 28px ; 
-            border-radius : 7px ; 
-            background-color : rgb(190 , 190 , 190) ; 
-            position : relative ;
-            transition : all 0.1s ease ;  
-            cursor : pointer ; 
-
-            span{
-                display : inline-block; 
-                position : absolute ; 
-                height : 10px ; 
-                width : 15px ;
-                left : 2px ;
-                top : 2px ; 
-                background : rgb(255,255,255,0.6) ; 
-                pointer-events : none ; 
-                border-radius : 5px ; 
-                box-shadow : 0 0 2px rgb(0,0,0,0.3) ; 
-                transition : all 0.1s ease ;  
-            }
-        }
-    }
-
-    .GeneratedInputFieldWrapper[position="1"]{
-        top : 200px ; 
-    }
-
-    .GeneratedInputFieldWrapper{
-        top : 150px ; 
-        position : absolute ; 
-        display : flex; 
-        align-items : center ; 
-        justify-content : center ; 
-        gap : 23px ; 
-        left : 110px ; 
-        z-index : 1 ; 
+    .GeneratedInputFieldWrapper {
+        top: 150px;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 23px;
+        left: 110px;
+        z-index: 1;
 
 
         .InputFieldName {
-            height : 24px ;
-            width : 100px ; 
-            display : flex; 
-            align-items : center ; 
-            justify-content : flex-end ; 
+            height: 24px;
+            width: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
 
-            user-select : none ; 
-            pointer-events : none ; 
-            font-size : 12px ; 
-            font-weight : 650 ; 
-            color : rgb(0,0,0,0.65) ; 
+            user-select: none;
+            pointer-events: none;
+            font-size: 12px;
+            font-weight: 650;
+            color: rgb(0, 0, 0, 0.65);
         }
 
-        .GeneratedInputFieldContainer{
-            position : relative ; 
-            height : 24px; 
-            width : 231px ; 
-            border-radius : 5px ; 
-            background-color : rgb(190 , 190 , 190) ; 
-            overflow : hidden ; 
+        .GeneratedInputFieldContainer {
+            position: relative;
+            height: 24px;
+            width: 231px;
+            border-radius: 5px;
+            background-color: rgb(190, 190, 190);
+            overflow: hidden;
 
-            input{
-                position : absolute ; 
-                top : -1px ; left : 12px ; 
-                height : 24px ; width : 188px;
-                background : inherit ; 
-                outline : none ; border : none ; 
-                font-size : 12px ;
-                font-family : "CodeStoreText" ; 
-                font-weight : 550 ; 
-                letter-spacing : 0.14px ; 
-                color : rgb(0,0,0,0.8) ; 
+            input {
+                position: absolute;
+                top: -1px;
+                left: 12px;
+                height: 24px;
+                width: 188px;
+                background: inherit;
+                outline: none;
+                border: none;
+                font-size: 12px;
+                font-family: "CodeStoreText";
+                font-weight: 550;
+                letter-spacing: 0.14px;
+                color: rgb(0, 0, 0, 0.8);
             }
 
             input:focus {
-                border : none ; border : none ; 
+                border: none;
+                border: none;
             }
 
-            div[length="0"]{
-                scale : 0 ; 
-                transition : all 0.2s ease ; 
+            div[length="0"] {
+                scale: 0;
+                transition: all 0.2s ease;
             }
+
             div {
-                cursor : pointer ; 
-                height : 13px ;
-                width : 13px ;
-                scale : 1 ; 
-                transition : all 0.2s ease ; 
-                position : absolute ; 
-                top : calc(5.5px) ; 
-                right : 6px ; 
+                cursor: pointer;
+                height: 13px;
+                width: 13px;
+                scale: 1;
+                transition: all 0.2s ease;
+                position: absolute;
+                top: calc(5.5px);
+                right: 6px;
 
-                svg{
-                    height : 13px;
-                    width : 13px; 
-                    pointer-events : none ;
-                    transform : translate(0% , -2px) ; 
+                svg {
+                    height: 13px;
+                    width: 13px;
+                    pointer-events: none;
+                    transform: translate(0%, -2px);
 
                     path {
-                        fill : rgb(0,0,0,0.5) ; 
+                        fill: rgb(0, 0, 0, 0.5);
                     }
                 }
             }
         }
 
+    }
+}
+
+
+.PeekInformation {
+    position: absolute;
+    width: 231px;
+    height: max-content;
+    background: rgb(190, 190, 190);
+    top: 260px;
+    border-radius: 5px;
+    left: calc(110px + 100px + 23px);
+
+
+    .PeekInformation-Relative-Box {
+        width: 231px;
+        background: transparent;
+        height: max-content;
+    }
+
+    .PeekInformation-Arrow {
+        position: absolute;
+        height: 7px;
+        width: 7px;
+        border-radius: 1px;
+        background: rgb(190, 190, 190);
+        top: -2.75px;
+        left: calc((190px - 7px) / 2);
+        z-index: 1;
+        transform: rotateZ(45deg);
+        pointer-events: none;
+    }
+
+    .PeekInformation-Content-Box {
+        position: relative;
+        background: rgb(190, 190, 190);
+        z-index: 2;
+        min-height: 0px;
+        height: max-content;
+        padding-block-end: 10px;
+        width: 201px;
+        padding-inline: 15px;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        pointer-events: none;
+        user-select: none;
+
+
+        .Declaration-Span {
+            margin-top: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            color: rgb(0, 0, 0, 0.8);
+            position: relative;
+            margin-bottom: 3px;
+
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
+            span {
+                margin-inline: 5px;
+            }
+        }
+
+        .Declaration-Span::after {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: rgb(0, 0, 0, 0.4);
+            bottom: -3px;
+            left: 0px;
+            content: "";
+            border-radius: 1px;
+        }
+
+        .Information-Property-Container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 9px;
+            font-weight: 550;
+            color: rgb(0, 0, 0, 0.7);
+            margin-block: 2.5px;
+
+            span {
+                margin-inline: 5px;
+            }
+
+            div {
+                height: 7px;
+                width: 7px;
+                margin-inline: 5px;
+                background: rgb(220, 50, 50, 0);
+                opacity: 0;
+
+
+                svg {
+                    height: 7px;
+                    width: 7px;
+
+                    path {
+                        fill: rgb(58, 58, 252);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.PeekInformation-Content-Box:has(.Declaration-Span[haslengthmorethan8="true"]) {
+    .PropertyLen8DivIndicator {
+        opacity: 1 !important;
+    }
+}
+
+.PeekInformation-Content-Box:has(.Declaration-Span[haslengthlessthan20="true"]) {
+    .PropertyLen20DivIndicator {
+        opacity: 1 !important;
+    }
+}
+
+.PeekInformation-Content-Box:has(.Declaration-Span[hasuppercase="true"]) {
+    .PropertyUpperCaseDivIndicator {
+        opacity: 1 !important;
+    }
+}
+
+.PeekInformation-Content-Box:has(.Declaration-Span[haslowercase="true"]) {
+    .PropertyLowerCaseDivIndicator {
+        opacity: 1 !important;
+    }
+}
+
+.PeekInformation-Content-Box:has(.Declaration-Span[hasnumber="true"]) {
+    .PropertyNumberCaseDivIndicator {
+        opacity: 1 !important;
+    }
+}
+
+.PeekInformation-Content-Box:has(.Declaration-Span[isvalid="true"]) {
+    .PropertyFormatDivIndicator {
+        opacity: 1 !important;
     }
 }
