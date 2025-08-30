@@ -82,6 +82,11 @@
         --Pale-Color: rgb(168, 158, 158);
         --Switch-Background: rgb(37, 35, 35);
 
+        #PipeLineSwitchContainer[scaled-down="true"]{
+            scale : 0 ; 
+            transition : scale 0.2s ease ; 
+        }
+
         #PipeLineSwitchContainer {
             display: flex;
             align-items: center;
@@ -94,6 +99,8 @@
             overflow: hidden;
             background: var(--Pale-Color);
             margin-left: var(--Control-Box-Margin);
+            scale : 1 ; 
+            transition : scale 0.2s ease ; 
 
             div {
                 z-index: 2;

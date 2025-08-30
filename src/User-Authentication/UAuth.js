@@ -7,10 +7,10 @@ export class UserAuthentication {
         this.AuthState = {
             "ProgressState": {
                 "PipeLine": "Login",
-                "ProgressLevel": 0 ,
+                "ProgressLevel": 0,
                 "StatusSpanCount": 1,
-                "InProgress" : false , 
-                "ProccededWithForgotPassword" : false , 
+                "InProgress": false,
+                "ProccededWithForgotPassword": false,
             },
             "Login": {
                 "LoginUserMailInput": "",
@@ -22,7 +22,7 @@ export class UserAuthentication {
             "Signup": {
                 "SignupUserMailInput": "",
                 "SignupUserPassInput": "",
-                "SingupUserOTPInput": "",
+                "SignupUserOTPInput": "",
             }
         }
 
@@ -61,7 +61,7 @@ export class UserAuthentication {
             }
         }
 
-        this.ErrorFrame = undefined ; 
+        this.ErrorFrame = undefined;
         this.ProceedButton = document?.getElementById("ProceedButton");
         this.GoBackButton = document?.getElementById("GoBackButton")
 
@@ -74,8 +74,8 @@ export class UserAuthentication {
         }
 
         this.APIFunctions = {
-            ForgotPassword : this.ProceedWithForgotPassword.bind(this) ,
-            Proceed : this.ProceedFunction.bind(this) ,  
+            ForgotPassword: this.ProceedWithForgotPassword.bind(this),
+            Proceed: this.ProceedFunction.bind(this),
         }
         this.AuthMainPage?.querySelectorAll("input").forEach((inputf) => {
             inputf.addEventListener("input", this.Functions.HandleInput)
@@ -92,8 +92,8 @@ export class UserAuthentication {
         this.AuthMainPage?.querySelectorAll(".PeekInformation-Toggle").forEach((el) => {
             el.addEventListener("click", this.Functions.ToggleInfo)
         })
-        this.AuthMainPage?.querySelector("#ForgotPassword").addEventListener("click" , this.APIFunctions.ForgotPassword) ;
-        this.ProceedButton?.addEventListener("click" , this.APIFunctions.Proceed) ;  
+        this.AuthMainPage?.querySelector("#ForgotPassword").addEventListener("click", this.APIFunctions.ForgotPassword);
+        this.ProceedButton?.addEventListener("click", this.APIFunctions.Proceed);
     }
 
 
@@ -171,12 +171,13 @@ export class UserAuthentication {
 
 
     HandleInput(event) {
-        if(this.AuthState.ProgressState.InProgress) return 
+        if (this.AuthState.ProgressState.InProgress) return
         var inputField = event.target;
         var Id = inputField.id;
         var Pipeline = inputField.getAttribute("pipeline")
         var Value = inputField.value;
         this.AuthState[Pipeline][Id] = Value;
+        console.log(Id)
         document.getElementById(Id + "Clear").setAttribute("length", Value.length);
         document.getElementById(Id + "Toggle")?.setAttribute("binary", "0");
         var role = inputField.getAttribute("input-role")
@@ -184,26 +185,26 @@ export class UserAuthentication {
         switch (input_type) {
             case "Mail": {
                 var ResultMail = this.VerifyEmail(Value)
-                if(Pipeline === "Login"){
-                    this.IsReady.Login.ForLogin.UserMail = ResultMail ; 
-                    this.IsReady.Login.ForReset.UserMail = ResultMail ; 
-                }else{
-                    this.IsReady.Signup.ForSignup.UserMail = ResultMail ; 
+                if (Pipeline === "Login") {
+                    this.IsReady.Login.ForLogin.UserMail = ResultMail;
+                    this.IsReady.Login.ForReset.UserMail = ResultMail;
+                } else {
+                    this.IsReady.Signup.ForSignup.UserMail = ResultMail;
                 }
                 document.getElementById(role + "Info").setAttribute("isvalid", ResultMail);
                 return
             }
             case "Pass": {
                 var ResultPass = this.VerifyPassword(Value);
-                if(Pipeline === "Login"){
-                    if(role === "LoginResetPass"){
+                if (Pipeline === "Login") {
+                    if (role === "LoginResetPass") {
                         this.IsReady.Login.ForRedirectViaReset.NewPassword = ResultPass.Result;
-                    }else{
-                        this.IsReady.Login.ForLogin.UserPassword = ResultPass.Result ; 
-                         this.ToggleComplex(0) ; 
+                    } else {
+                        this.IsReady.Login.ForLogin.UserPassword = ResultPass.Result;
+                        this.ToggleComplex(0);
                     }
-                }else{
-                    this.IsReady.Signup.ForSignup.UserPassword = ResultPass.Result ; 
+                } else {
+                    this.IsReady.Signup.ForSignup.UserPassword = ResultPass.Result;
                 }
                 for (let key in ResultPass.MoreInfo) {
                     document.getElementById(role + "Info").setAttribute(key.toLowerCase(), ResultPass.MoreInfo[key]);
@@ -212,11 +213,11 @@ export class UserAuthentication {
             }
             case "OTP": {
                 var ResultOTP = this.VerifyOTP(Value)
-                if (Pipeline === "Login"){
-                    this.IsReady.Login.ForRedirectViaReset.OTP = ResultOTP ;
-                    this.IsReady.Login.ForRedirectViaLogin.OTP = ResultOTP ; 
-                }else{
-                    this.IsReady.Signup.ForRedirectViaSignup.OTP = ResultOTP ; 
+                if (Pipeline === "Login") {
+                    this.IsReady.Login.ForRedirectViaReset.OTP = ResultOTP;
+                    this.IsReady.Login.ForRedirectViaLogin.OTP = ResultOTP;
+                } else {
+                    this.IsReady.Signup.ForRedirectViaSignup.OTP = ResultOTP;
                 }
                 document.getElementById(role + "Info").setAttribute("isvalid", ResultOTP)
                 return
@@ -226,10 +227,10 @@ export class UserAuthentication {
         }
     }
 
-    
+
 
     HandleInputClear(event) {
-        if(this.AuthState.ProgressState.InProgress) return 
+        if (this.AuthState.ProgressState.InProgress) return
         var element = event.target;
         var Pipeline = element.getAttribute("pipeline")
         var Id = element.id.slice(0, element.id.length - 5);
@@ -259,7 +260,7 @@ export class UserAuthentication {
     }
 
     ChangePipeline(event) {
-        if(this.AuthState.ProgressState.InProgress) return 
+        if (!(!this.AuthState.ProgressState.InProgress && !this.AuthState.ProgressState.ProgressLevel)) return
         var element = event.target;
         var PipeLine = element.getAttribute("pipeline-role")
         if (PipeLine !== this.AuthState.ProgressState.PipeLine) {
@@ -296,137 +297,344 @@ export class UserAuthentication {
         var isOn = +target.getAttribute("ison")
         target.setAttribute("ison", 1 - isOn)
         setTimeout(() => {
-            if(target.id === "ComplexToggle"){
-            this.ToggleComplex(0) ; 
-        }
-        } , 150)
+            if (target.id === "ComplexToggle") {
+                this.ToggleComplex(0);
+            }
+        }, 150)
     }
 
-    ToggleButton(id){
-        var element = document.getElementById(id) ;
-        element.setAttribute("ison" , 1) ;  
+    ToggleButton(id) {
+        var element = document.getElementById(id);
+        element.setAttribute("ison", 1);
     }
 
-    ToggleComplex(num){
+    ToggleComplex(num) {
         document.getElementById("ComplexToggleWrapper").querySelectorAll(".forgotpassword").forEach((el) => {
-            el.setAttribute("forgotpassword" , num) ; 
+            el.setAttribute("forgotpassword", num);
         })
     }
 
     // NOTE : update the proceeded with forgot password 
-    async ProceedWithForgotPassword(){
-        if(this.AuthState.ProgressState.InProgress) return 
+    async ProceedWithForgotPassword() {
+        if (this.AuthState.ProgressState.InProgress) return
         //Checking if the thing is ready or not 
         var NeededObj = (this.IsReady.Login.ForReset)
         if (!NeededObj.UserMail) {
-            this.ToggleComplex(1) ; 
-            var ToggleSwitch = document.getElementById("ComplexToggle") ;
-            ToggleSwitch.setAttribute("ison" , 1)
-            return  
+            this.ToggleComplex(1);
+            var ToggleSwitch = document.getElementById("ComplexToggle");
+            ToggleSwitch.setAttribute("ison", 1)
+            return
         }
     }
 
 
-    UpdateProgressLevel(NewLevel , Pipeline , LineToWrite){
-        if (this.AuthState.ProgressState.InProgress) return  ;
+
+
+    ApplyProgressChanges() {
+        this.AuthCard.style.setProperty("--ProgressCount", this.AuthState.ProgressState.ProgressLevel)
+    }
+
+    UpdateProgressLevel(Pipeline, LineToWrite) {
+        if (this.AuthState.ProgressState.InProgress) return;
         var ProgressState = this.AuthState.ProgressState;
-        if(Pipeline !== ProgressState || ProgressState.InProgress || ProgressState.ProgressLevel === 1){
+        if (Pipeline !== ProgressState.PipeLine || ProgressState.InProgress || ProgressState.ProgressLevel === 1) {
             console.log("MisMatching progress increment ! [Invalid Pipeline]")
-            return ; 
+            return;
         }
 
-        if(Pipeline === "Login"){
-
+        var ComplexLogicWindow = document.getElementById("ComplexLoginWindow")
+        var PipelineSwitchCtr = document.getElementById("PipeLineSwitchContainer");
+        if (Pipeline === "Login" && ProgressState.ProccededWithForgotPassword) {
+            this.AnimateStatus(LineToWrite)
+            this.AuthState.ProgressState.ProgressLevel = 1;
+            this.ApplyProgressChanges()
+            ComplexLogicWindow.setAttribute("allow-position-1", "true");
+            PipelineSwitchCtr.setAttribute("scaled-down", "true")
+            this.SetAttribute("ProceedButton", "pale", "true")
+            this.SetAttribute("ProceedButton", "loading", "false")
+            this.SetAttribute("GoBackButton", "scaled-down", "false")
+            this.SetAttribute("GoBackButton", "pale", "false")
+        } else if (Pipeline === "Login" && !ProgressState.ProccededWithForgotPassword) {
+            this.AnimateStatus(LineToWrite)
+            this.AuthState.ProgressState.ProgressLevel = 1;
+            this.ApplyProgressChanges()
+            ComplexLogicWindow.setAttribute("allow-position-1", "false");
+            PipelineSwitchCtr.setAttribute("scaled-down", "true")
+            this.SetAttribute("ProceedButton", "pale", "true")
+            this.SetAttribute("ProceedButton", "loading", "false")
+            this.SetAttribute("GoBackButton", "scaled-down", "false")
+            this.SetAttribute("GoBackButton", "pale", "false")
         }
 
-        if(Pipeline === "Signup"){
-            
+        if (Pipeline === "Signup") {
+            this.AnimateStatus(LineToWrite)
+            this.AuthState.ProgressState.ProgressLevel = 1;
+            this.ApplyProgressChanges()
+            PipelineSwitchCtr.setAttribute("scaled-down", "true")
+            this.SetAttribute("ProceedButton", "pale", "true")
+            this.SetAttribute("ProceedButton", "loading", "false")
+            this.SetAttribute("GoBackButton", "scaled-down", "false")
+            this.SetAttribute("GoBackButton", "pale", "false")
         }
 
     }
 
 
-    async ProceedFunction(){
-        if(this.AuthState.ProgressState.InProgress) return 
-        var InfoObject = this.AuthState.ProgressState ; 
-        var Pipeline = InfoObject.PipeLine ;
-        var ProgressLevel = InfoObject.ProgressLevel ;  
-        if(Pipeline === "Login"){
-            if(ProgressLevel === 0){
+    async ProceedFunction() {
+        if (this.AuthState.ProgressState.InProgress) return
+        var InfoObject = this.AuthState.ProgressState;
+        var Pipeline = InfoObject.PipeLine;
+        var ProgressLevel = InfoObject.ProgressLevel;
+        if (Pipeline === "Login") {
+            if (ProgressLevel === 0) {
                 var ReadyBoxLogin = this.IsReady.Login.ForLogin
-                if(ReadyBoxLogin.UserMail && ReadyBoxLogin.UserPassword){
-                    console.log("We are ready for login")
-                }else{
+                if (ReadyBoxLogin.UserMail && ReadyBoxLogin.UserPassword) {
+                    this.AuthState.ProgressState.InProgress = true;
+                    this.SetAttribute("ProceedButton", "loading", "true");
+                    try {
+                        var ResultLogin1 = await fetch(ReadyBoxLogin.URL, {
+                            credentials : "include", // This is crucial!
+                            method: "POST",
+                            body: JSON.stringify({
+                                "usermail": this.AuthState.Login.LoginUserMailInput,
+                                "userpassword": this.AuthState.Login.LoginUserPassInput,
+                            })
+                        })
+
+                        var responseLogin1 = await ResultLogin1.json();
+                        var VerdictLogin1 = responseLogin1["Success"];
+                        if (typeof (VerdictLogin1) === "boolean") {
+                            this.AuthState.ProgressState.InProgress = false;
+                            if (VerdictLogin1) {
+                                this.UpdateProgressLevel("Login", "Enter the OTP sent to your email to login.")
+                            } else {
+                                this.UpdateErrorLogs(responseLogin1["H"], responseLogin1["M"]);
+                                this.ShowError();
+                                this.SetAttribute("ProceedButton", "loading", "false")
+                            }
+                        } else if (typeof (VerdictLogin1) === "string") {
+                            this.AuthState.ProgressState.InProgress = false;
+                            VerdictLogin1 = VerdictLogin1.toLowerCase();
+                            if (VerdictLogin1 === "true") {
+                                this.UpdateProgressLevel("Login", "Enter the OTP sent to your email to login.")
+                            } else {
+                                this.UpdateErrorLogs(responseLogin1["H"], responseLogin1["M"]);
+                                this.ShowError();
+                                this.SetAttribute("ProceedButton", "loading", "false")
+                            }
+                        }
+                    } catch (error) {
+                        this.UpdateErrorLogs("Application Error", "An unexpected error occurred. Please refresh the page and try again.");
+                        this.ShowError();
+                        this.AuthState.ProgressState.InProgress = false;
+                        this.SetAttribute("ProceedButton", "loading", "false")
+                        console.log(error);
+                    }
+                } else {
                     this.ToggleComplex("0")
                     this.ToggleButton("ComplexToggle")
                 }
-            }else if (ProgressLevel === 1 && InfoObject.ProccededWithForgotPassword){
-                var ReadyBoxLoginRedirectViaReset = this.IsReady.Login.ForRedirectViaReset ;
-                if(ReadyBoxLoginRedirectViaReset.NewPassword && ReadyBoxLoginRedirectViaReset.OTP){
+            } else if (ProgressLevel === 1 && InfoObject.ProccededWithForgotPassword) {
+                var ReadyBoxLoginRedirectViaReset = this.IsReady.Login.ForRedirectViaReset;
+                if (ReadyBoxLoginRedirectViaReset.NewPassword && ReadyBoxLoginRedirectViaReset.OTP) {
                     console.log("we are ready for redirect via login with reset")
-                }else{
+                } else {
                     this.ToggleButton("ComplexToggle2")
                 }
-            }else if (ProgressLevel === 1 && !InfoObject.ProccededWithForgotPassword){
+            } else if (ProgressLevel === 1 && !InfoObject.ProccededWithForgotPassword) {
                 var ReadyBoxLoginRedirect = this.IsReady.Login.ForRedirectViaLogin
-                if(ReadyBoxLoginRedirect.OTP){
+                if (ReadyBoxLoginRedirect.OTP) {
                     console.log("we are reaady to redirect via login")
-                }else{
+                    this.AuthState.ProgressState.InProgress = true;
+                    this.SetAttribute("ProceedButton", "loading", "true")
+                    this.SetAttribute("GoBackButton", "pale", "true")
+                    try {
+                        var ResultLoginViaRedirect = await fetch(ReadyBoxLoginRedirect.URL, {
+                            credentials : "include", // This is crucial!
+                            method: "POST",
+                            body: JSON.stringify({
+                                "otp": this.AuthState.Login.LoginUserOTPInput,
+                            }),
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        })
+
+                        var ResponseLoginViaRedirect = await ResultLoginViaRedirect.json();
+                        var VerdictLoginViaRedirect = ResponseLoginViaRedirect["Success"]
+                        if (typeof (VerdictLoginViaRedirect) === "boolean") {
+                            if (VerdictLoginViaRedirect) {
+                                console.log("redirecting via login")
+                            } else {
+                                this.AuthState.ProgressState.InProgress = false;
+                                this.SetAttribute("ProceedButton", "loading", "false")
+                                this.SetAttribute("GoBackButton", "pale", "false")
+                                this.UpdateErrorLogs(ResponseLoginViaRedirect["H"], ResponseLoginViaRedirect["M"])
+                                this.ShowError();
+                            }
+                        } else if (typeof (VerdictLoginViaRedirect) === "string") {
+                            VerdictLoginViaRedirect = VerdictLoginViaRedirect.toLowerCase();
+                            if (VerdictLoginViaRedirect === "true") {
+                                console.log("redirecting via login")
+                            } else {
+                                this.AuthState.ProgressState.InProgress = false;
+                                this.SetAttribute("ProceedButton", "loading", "false")
+                                this.SetAttribute("GoBackButton", "pale", "false")
+                                this.UpdateErrorLogs(ResponseLoginViaRedirect["H"], ResponseLoginViaRedirect["M"])
+                                this.ShowError();
+                            }
+                        }
+                    } catch (error) {
+                        this.UpdateErrorLogs("Application Error", "An unexpected error occurred. Please refresh the page and try again.");
+                        this.ShowError();
+                        this.AuthState.ProgressState.InProgress = false;
+                        this.SetAttribute("ProceedButton", "loading", "false")
+                        this.SetAttribute("GoBackButton", "pale", "false")
+                        console.log(error);
+                    }
+                } else {
                     this.ToggleButton("ComplexToggle2")
                 }
             }
         }
 
-        if(Pipeline === "Signup"){
+        if (Pipeline === "Signup") {
             console.log("we are in pipeline = Signup")
-            if(ProgressLevel === 0){
-                var ReadyBoxSignup = this.IsReady.Signup.ForSignup ;
-                if(ReadyBoxSignup.UserMail && ReadyBoxSignup.UserPassword){
+            if (ProgressLevel === 0) {
+                var ReadyBoxSignup = this.IsReady.Signup.ForSignup;
+                if (ReadyBoxSignup.UserMail && ReadyBoxSignup.UserPassword) {
                     console.log("we are ready for signing up !")
-                }else{
+                    this.AuthState.ProgressState.InProgress = true;
+                    this.SetAttribute("ProceedButton", "loading", "true");
+                    try {
+                        var ResultSignup1 = await fetch(ReadyBoxSignup.URL, {
+                            method: "POST",
+                            body: JSON.stringify({
+                                "usermail": this.AuthState.Signup.SignupUserMailInput,
+                                "userpassword": this.AuthState.Signup.SignupUserPassInput,
+                            })
+                        })
+
+                        var responseSignup1 = await ResultSignup1.json();
+                        var VerdictSignup1 = responseSignup1["Success"];
+
+                        if (typeof (VerdictSignup1) === "boolean") {
+                            this.AuthState.ProgressState.InProgress = false;
+                            if (VerdictSignup1) {
+                                this.UpdateProgressLevel("Signup", "Enter the OTP sent to your email to sign-up.")
+                            } else {
+                                this.UpdateErrorLogs(responseSignup1["H"], responseSignup1["M"])
+                                this.ShowError();
+                                this.SetAttribute("ProceedButton", "loading", "false");
+                            }
+                        } else if (typeof (VerdictSignup1) === "string") {
+                            this.AuthState.ProgressState.InProgress = false;
+                            VerdictSignup1 = VerdictSignup1.toLowerCase();
+                            if (VerdictSignup1 === "true") {
+                                this.UpdateProgressLevel("Signup", "Enter the OTP sent to your email to sign-up.")
+                            } else {
+                                this.UpdateErrorLogs(responseSignup1["H"], responseSignup1["M"])
+                                this.ShowError();
+                                this.SetAttribute("ProceedButton", "loading", "false");
+                            }
+                        }
+                    } catch (error) {
+                        this.UpdateErrorLogs("Application Error", "An unexpected error occurred. Please refresh the page and try again.");
+                        this.ShowError();
+                        console.log(error);
+                        this.AuthState.ProgressState.InProgress = false;
+                        this.SetAttribute("ProceedButton", "loading", "false")
+                    }
+                } else {
                     this.ToggleButton("ComplexToggle3")
                 }
             }
 
-            if(ProgressLevel === 1){
+            if (ProgressLevel === 1) {
                 var ReadyBoxSignupRedirect = this.IsReady.Signup.ForRedirectViaSignup
-                if(ReadyBoxSignupRedirect.OTP){
+                if (ReadyBoxSignupRedirect.OTP) {
                     console.log("we are ready for rediect via signup")
-                }else{
+                    this.SetAttribute("ProceedButton", "loading", "true");
+                    this.AuthState.ProgressState.InProgress = true;
+                    this.SetAttribute("GoBackButton", "pale", "true");
+                    try {
+                        console.log(this.AuthState.Signup.SignupUserOTPInput)
+                        var ResultSignupRedirect = await fetch(ReadyBoxSignupRedirect.URL, {
+                            credentials : "include" , 
+                            method: "POST",
+                            body: JSON.stringify({
+                                "otp": this.AuthState.Signup.SignupUserOTPInput,
+                                "usermail": this.AuthState.Signup.SignupUserMailInput,
+                            })
+                        })
+
+                        var ResponseSignupRedirect = await ResultSignupRedirect.json();
+                        var VerdictSignupRedirect = ResponseSignupRedirect["Success"];
+
+                        if (typeof (VerdictSignupRedirect) === "boolean") {
+                            if (VerdictSignupRedirect) {
+                                console.log("Ready for redirect via signup")
+                            } else {
+                                this.AuthState.ProgressState.InProgress = false;
+                                this.UpdateErrorLogs(ResponseSignupRedirect["H"], ResponseSignupRedirect["M"])
+                                this.ShowError();
+                                this.SetAttribute("ProceedButton", "loading", "false");
+                                this.SetAttribute("GoBackButton", "pale", "false");
+                            }
+                        } else if (typeof (VerdictSignupRedirect) === "string") {
+                            VerdictSignupRedirect = VerdictSignupRedirect.toLowerCase();
+                            if (VerdictSignupRedirect === "true") {
+                                console.log("Ready for redirect via signup")
+                            } else {
+                                this.AuthState.ProgressState.InProgress = false;
+                                this.UpdateErrorLogs(ResponseSignupRedirect["H"], ResponseSignupRedirect["M"])
+                                this.ShowError();
+                                this.SetAttribute("ProceedButton", "loading", "false");
+                                this.SetAttribute("GoBackButton", "pale", "false");
+                            }
+                        }
+                    } catch (error) {
+                        this.UpdateErrorLogs("Application Error", "An unexpected error occurred. Please refresh the page and try again.");
+                        this.ShowError();
+                        console.log(error);
+                        this.AuthState.ProgressState.InProgress = false;
+                        this.SetAttribute("ProceedButton", "loading", "false")
+                        this.SetAttribute("GoBackButton", "pale", "false");
+                    }
+                } else {
                     this.ToggleButton("ComplexToggle4")
                 }
             }
         }
     }
 
-    UpdateErrorLogs(Heading , Message){
-        this.AuthMainPage.querySelector("#Error-Heading-Span").textContent = Heading ; 
-        this.AuthMainPage.querySelector("#Error-Message-Span").textContent = Message ; 
+    UpdateErrorLogs(Heading, Message) {
+        this.AuthMainPage.querySelector("#Error-Heading-Span").textContent = Heading;
+        this.AuthMainPage.querySelector("#Error-Message-Span").textContent = Message;
     }
 
-    ShowError(){
-        var ErrorCtr = document.getElementById("Auth-Err-Container") ; 
-        ErrorCtr.style.setProperty("--Opacity" , 1) ; 
-        if(this.ErrorFrame !== undefined){
+    ShowError() {
+        var ErrorCtr = document.getElementById("Auth-Err-Container");
+        ErrorCtr.style.setProperty("--Opacity", 1);
+        if (this.ErrorFrame !== undefined) {
             cancelAnimationFrame(this.ErrorFrame)
-            this.ErrorFrame = undefined ; 
+            this.ErrorFrame = undefined;
         }
-        var start = performance.now() ; 
-        const  step = (t) => 
-        {
-            var elapsedtime = (t - start) / 1000 ; 
-            var p = Math.max(0 , Math.min(1 , elapsedtime/5))
+        var start = performance.now();
+        const step = (t) => {
+            var elapsedtime = (t - start) / 1000;
+            var p = Math.max(0, Math.min(1, elapsedtime / 5))
 
-            if (p < 1){
-                ErrorCtr.style.setProperty("--ScaleX" , 1 - p) ; 
-                this.ErrorFrame =requestAnimationFrame(step)
-            }else{
-                ErrorCtr.style.setProperty("--Opacity" , 0) ;
-                cancelAnimationFrame(this.ErrorFrame) 
-                this.ErrorFrame = undefined ; 
+            if (p < 1) {
+                ErrorCtr.style.setProperty("--ScaleX", 1 - p);
+                this.ErrorFrame = requestAnimationFrame(step)
+            } else {
+                ErrorCtr.style.setProperty("--Opacity", 0);
+                cancelAnimationFrame(this.ErrorFrame)
+                this.ErrorFrame = undefined;
             }
         }
-        this.ErrorFrame = requestAnimationFrame(step) ; 
+        this.ErrorFrame = requestAnimationFrame(step);
     }
 
 
@@ -448,7 +656,7 @@ export class UserAuthentication {
         this.AuthMainPage?.querySelectorAll(".PeekInformation-Toggle").forEach((el) => {
             el.removeEventListener("click", this.Functions.ToggleInfo)
         })
-        this.AuthMainPage?.querySelector("#ForgotPassword").removeEventListener("click" , this.APIFunctions.ForgotPassword) ; 
-        this.ProceedButton?.removeEventListener("click" , this.APIFunctions.Proceed) ;  
+        this.AuthMainPage?.querySelector("#ForgotPassword").removeEventListener("click", this.APIFunctions.ForgotPassword);
+        this.ProceedButton?.removeEventListener("click", this.APIFunctions.Proceed);
     }
 }

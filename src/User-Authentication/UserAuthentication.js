@@ -3,7 +3,7 @@ import { useLayoutEffect } from "react"
 import "./UAuth.css"
 import "./UAuth2.css"
 
-const LocalSVGImport = (name) => {
+export const LocalSVGImport = (name) => {
     switch (name) {
         case "GoBack":
             return (
@@ -185,7 +185,7 @@ const UserAuthentication = () => {
                                 </div>
                                 <div className="PeekInformation">
                                     <div className="PeekInformation-Relative-Box">
-                                        <div className="PeekInformation-Toggle" id="ComplexToggle2"  ison="0">
+                                        <div className="PeekInformation-Toggle" id="ComplexToggle2"  ison="1">
                                             <span></span>
                                         </div>
                                         <div className="PeekInformation-Arrow"></div>
@@ -280,11 +280,11 @@ const UserAuthentication = () => {
                             <div className="Pipeline-Sliding-Window">
                                 <div className="GeneratedInputFieldWrapper" position="0">
                                     <div className="InputFieldName"><span>OTP</span></div>
-                                    {GenerateInputField({ type: "text", pipeline: "Signup", id: "SingupUserOTPInput", placeholder: "000000", className: "", CancelClassName: "GeneratedInputFieldCancelButton", inputrole: "SignupOTP", inputtype: "OTP" })}
+                                    {GenerateInputField({ type: "text", pipeline: "Signup", id: "SignupUserOTPInput", placeholder: "000000", className: "", CancelClassName: "GeneratedInputFieldCancelButton", inputrole: "SignupOTP", inputtype: "OTP" })}
                                 </div>
                                 <div className="PeekInformation">
                                     <div className="PeekInformation-Relative-Box">
-                                        <div className="PeekInformation-Toggle" id="ComplexToggle4" ison="0">
+                                        <div className="PeekInformation-Toggle" id="ComplexToggle4" ison="1">
                                             <span></span>
                                         </div>
                                         <div className="PeekInformation-Arrow"></div>
@@ -302,7 +302,7 @@ const UserAuthentication = () => {
                     </div>
                 </div>
                 <div id="Authentication-Card-Control-Box">
-                    <div id="PipeLineSwitchContainer" pipeline="Login">
+                    <div id="PipeLineSwitchContainer" scaled-down="false" pipeline="Login">
                         <div className="Pipeline-Moving-Div"></div>
                         <div pipeline-role="Login" className="PipeLine-Static-Div"><span>Login</span></div>
                         <div pipeline-role="Signup" className="PipeLine-Static-Div"><span>Sign-up</span></div>
