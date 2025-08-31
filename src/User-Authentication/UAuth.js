@@ -51,7 +51,7 @@ export class UserAuthentication {
             "Signup": {
                 "ForSignup": {
                     "UserMail": false,
-                    "UserPassword": true,
+                    "UserPassword": false,
                     "URL": "http://localhost:8000/sign-up-details"
                 },
                 "ForRedirectViaSignup": {
@@ -188,8 +188,19 @@ export class UserAuthentication {
                 if (Pipeline === "Login") {
                     this.IsReady.Login.ForLogin.UserMail = ResultMail;
                     this.IsReady.Login.ForReset.UserMail = ResultMail;
+
+                    if (this.IsReady.Login.ForLogin.UserMail && this.IsReady.Login.ForLogin.UserPassword) {
+                        this.SetAttribute("ProceedButton", "pale", "false");
+                    } else {
+                        this.SetAttribute("ProceedButton", "pale", "true");
+                    }
                 } else {
                     this.IsReady.Signup.ForSignup.UserMail = ResultMail;
+                    if (this.IsReady.Signup.ForSignup.UserMail && this.IsReady.Signup.ForSignup.UserPassword) {
+                        this.SetAttribute("ProceedButton", "pale", "false")
+                    } else {
+                        this.SetAttribute("ProceedButton", "pale", "true");
+                    }
                 }
                 document.getElementById(role + "Info").setAttribute("isvalid", ResultMail);
                 return
@@ -199,12 +210,27 @@ export class UserAuthentication {
                 if (Pipeline === "Login") {
                     if (role === "LoginResetPass") {
                         this.IsReady.Login.ForRedirectViaReset.NewPassword = ResultPass.Result;
+                        if (ResultPass.Result && this.IsReady.Login.ForRedirectViaReset.OTP && this.AuthState.ProgressState.ProccededWithForgotPassword) {
+                            this.SetAttribute("ProceedButton", "pale", "false");
+                        } else {
+                            this.SetAttribute("ProceedButton", "pale", "true");
+                        }
                     } else {
                         this.IsReady.Login.ForLogin.UserPassword = ResultPass.Result;
+                        if (this.IsReady.Login.ForLogin.UserMail && ResultPass.Result) {
+                            this.SetAttribute("ProceedButton", "pale", "false");
+                        } else {
+                            this.SetAttribute("ProceedButton", "pale", "true");
+                        }
                         this.ToggleComplex(0);
                     }
                 } else {
                     this.IsReady.Signup.ForSignup.UserPassword = ResultPass.Result;
+                    if (this.IsReady.Signup.ForSignup.UserMail && ResultPass.Result) {
+                        this.SetAttribute("ProceedButton", "pale", "false");
+                    } else {
+                        this.SetAttribute("ProceedButton", "pale", "true");
+                    }
                 }
                 for (let key in ResultPass.MoreInfo) {
                     document.getElementById(role + "Info").setAttribute(key.toLowerCase(), ResultPass.MoreInfo[key]);
@@ -216,8 +242,28 @@ export class UserAuthentication {
                 if (Pipeline === "Login") {
                     this.IsReady.Login.ForRedirectViaReset.OTP = ResultOTP;
                     this.IsReady.Login.ForRedirectViaLogin.OTP = ResultOTP;
+
+                    if (this.AuthState.ProgressState.ProccededWithForgotPassword) {
+                        if (this.IsReady.Login.ForRedirectViaReset.OTP && this.IsReady.Login.ForRedirectViaReset.NewPassword) {
+                            this.SetAttribute("ProceedButton", "pale", "false");
+                        } else {
+                            this.SetAttribute("ProceedButton", "pale", "true");
+                        }
+                    } else {
+                        if (this.IsReady.Login.ForRedirectViaLogin.OTP) {
+                            this.SetAttribute("ProceedButton", "pale", "false");
+                        } else {
+                            this.SetAttribute("ProceedButton", "pale", "true");
+                        }
+
+                    }
                 } else {
                     this.IsReady.Signup.ForRedirectViaSignup.OTP = ResultOTP;
+                    if (this.IsReady.Signup.ForRedirectViaSignup.OTP) {
+                        this.SetAttribute("ProceedButton", "pale", "false");
+                    } else {
+                        this.SetAttribute("ProceedButton", "pale", "true");
+                    }
                 }
                 document.getElementById(role + "Info").setAttribute("isvalid", ResultOTP)
                 return
@@ -267,6 +313,21 @@ export class UserAuthentication {
             document.getElementById("PipeLineSwitchContainer").setAttribute("pipeline", PipeLine);
             this.AuthState.ProgressState.PipeLine = PipeLine;
             document.getElementById("Authentication-Card-Content-Box").setAttribute("pipeline", PipeLine);
+        }
+        if (PipeLine === "Login") {
+            this.AnimateStatus("Enter your credentials to login")
+            if (this.IsReady.Login.ForLogin.UserMail && this.IsReady.Login.ForLogin.UserPassword) {
+                this.SetAttribute("ProceedButton", "pale", "false")
+            } else {
+                this.SetAttribute("ProceedButton", "pale", "true")
+            }
+        } else if (PipeLine === "Signup") {
+            this.AnimateStatus("Enter your credentials to sing-up")
+            if (this.IsReady.Signup.ForSignup.UserMail && this.IsReady.Signup.ForSignup.UserPassword) {
+                this.SetAttribute("ProceedButton", "pale", "false")
+            } else {
+                this.SetAttribute("ProceedButton", "pale", "true")
+            }
         }
     }
 
@@ -325,6 +386,48 @@ export class UserAuthentication {
             ToggleSwitch.setAttribute("ison", 1)
             return
         }
+        this.AuthState.ProgressState.ProccededWithForgotPassword = true;
+        this.AuthState.ProgressState.InProgress = true;
+        this.SetAttribute("ProceedButton", "loading", "true");
+        try {
+            console.log("At step 1")
+            var ResultForgotPass = await fetch(NeededObj.URL, {
+                method: "POST",
+                credentials: "include",
+                body: JSON.stringify({
+                    "usermail": this.AuthState.Login.LoginUserMailInput,
+                })
+            })
+            var ResponseForgotPass = await ResultForgotPass.json();
+            var VerdictForgotPass = ResponseForgotPass["Success"]
+            this.AuthState.ProgressState.InProgress = false;
+            console.log("At step 2")
+            if (typeof (VerdictForgotPass) === "boolean") {
+                if (VerdictForgotPass) {
+                    this.UpdateProgressLevel("Login", "Enter the OTP sent to your email and your new password to proceed.")
+                } else {
+                    this.SetAttribute("ProceedButton", "loading", "false");
+                    this.UpdateErrorLogs(ResponseForgotPass["H"], ResponseForgotPass["M"])
+                    this.ShowError()
+                }
+            } else if (typeof (VerdictForgotPass) === "string") {
+                VerdictForgotPass = VerdictForgotPass.toLowerCase()
+                if (VerdictForgotPass === "true") {
+                    this.UpdateProgressLevel("Login", "Enter the OTP sent to your email and your new password to proceed.")
+                } else {
+                    this.SetAttribute("ProceedButton", "loading", "false");
+                    this.UpdateErrorLogs(ResponseForgotPass["H"], ResponseForgotPass["M"])
+                    this.ShowError()
+                }
+            }
+        } catch (error) {
+            this.AuthState.ProgressState.InProgress = false;
+            this.SetAttribute("ProceedButton", "loading", "true");
+            this.UpdateErrorLogs("Application Error", "An unexpected error occurred. Please refresh the page and try again.");
+            this.ShowError();
+            console.log(error)
+        }
+
     }
 
 
@@ -335,12 +438,15 @@ export class UserAuthentication {
     }
 
     UpdateProgressLevel(Pipeline, LineToWrite) {
+        console.log("WE are here !")
         if (this.AuthState.ProgressState.InProgress) return;
+        console.log("WE are here ! 2")
         var ProgressState = this.AuthState.ProgressState;
         if (Pipeline !== ProgressState.PipeLine || ProgressState.InProgress || ProgressState.ProgressLevel === 1) {
             console.log("MisMatching progress increment ! [Invalid Pipeline]")
             return;
         }
+        console.log("WE are going babay")
 
         var ComplexLogicWindow = document.getElementById("ComplexLoginWindow")
         var PipelineSwitchCtr = document.getElementById("PipeLineSwitchContainer");
@@ -354,7 +460,9 @@ export class UserAuthentication {
             this.SetAttribute("ProceedButton", "loading", "false")
             this.SetAttribute("GoBackButton", "scaled-down", "false")
             this.SetAttribute("GoBackButton", "pale", "false")
+            document.getElementById("ComplexLoginWindow").setAttribute("allow-position-1", "true")
         } else if (Pipeline === "Login" && !ProgressState.ProccededWithForgotPassword) {
+            document.getElementById("ComplexLoginWindow").setAttribute("allow-position-1", "false")
             this.AnimateStatus(LineToWrite)
             this.AuthState.ProgressState.ProgressLevel = 1;
             this.ApplyProgressChanges()
@@ -393,7 +501,7 @@ export class UserAuthentication {
                     this.SetAttribute("ProceedButton", "loading", "true");
                     try {
                         var ResultLogin1 = await fetch(ReadyBoxLogin.URL, {
-                            credentials : "include", // This is crucial!
+                            credentials: "include", // This is crucial!
                             method: "POST",
                             body: JSON.stringify({
                                 "usermail": this.AuthState.Login.LoginUserMailInput,
@@ -437,7 +545,51 @@ export class UserAuthentication {
             } else if (ProgressLevel === 1 && InfoObject.ProccededWithForgotPassword) {
                 var ReadyBoxLoginRedirectViaReset = this.IsReady.Login.ForRedirectViaReset;
                 if (ReadyBoxLoginRedirectViaReset.NewPassword && ReadyBoxLoginRedirectViaReset.OTP) {
-                    console.log("we are ready for redirect via login with reset")
+                    this.AuthState.ProgressState.InProgress = true;
+                    this.SetAttribute("ProceedButton", "loading", "true")
+                    this.SetAttribute("GoBackButton", "pale", "true")
+                    try {
+                        var ResultLoginViaReset = await fetch(ReadyBoxLoginRedirectViaReset.URL, {
+                            method: "PUT",
+                            credentials: "include",
+                            body: JSON.stringify({
+                                "otp": this.AuthState.Login.LoginUserOTPInput,
+                                "newpassword": this.AuthState.Login.LoginUserResetPassInput,
+                            })
+                        })
+
+                        var ResponseLoginViaReset = await ResultLoginViaReset.json();
+                        var VerdictLoginViaReset = ResponseLoginViaReset["Success"]
+                        if (typeof (VerdictLoginViaReset) === "boolean") {
+                            if (VerdictLoginViaReset) {
+                                console.log("redirect via login with reset")
+                            } else {
+                                this.AuthState.ProgressState.InProgress = false;
+                                this.SetAttribute("ProceedButton", "loading", "false")
+                                this.SetAttribute("GoBackButton", "pale", "false")
+                                this.UpdateErrorLogs(ResponseLoginViaReset["H"], ResponseLoginViaReset["M"])
+                                this.ShowError();
+                            }
+                        } else if (typeof (VerdictLoginViaReset) === "string") {
+                            VerdictLoginViaReset = VerdictLoginViaReset.toLowerCase()
+                            if (VerdictLoginViaReset === "true") {
+                                console.log("redirect via login with reset")
+                            } else {
+                                this.AuthState.ProgressState.InProgress = false;
+                                this.SetAttribute("ProceedButton", "loading", "false")
+                                this.SetAttribute("GoBackButton", "pale", "false")
+                                this.UpdateErrorLogs(ResponseLoginViaReset["H"], ResponseLoginViaReset["M"])
+                                this.ShowError();
+                            }
+                        }
+                    } catch (error) {
+                        this.UpdateErrorLogs("Application Error", "An unexpected error occurred. Please refresh the page and try again.");
+                        this.ShowError();
+                        this.AuthState.ProgressState.InProgress = false;
+                        this.SetAttribute("ProceedButton", "loading", "false")
+                        this.SetAttribute("GoBackButton", "pale", "false")
+                        console.log(error);
+                    }
                 } else {
                     this.ToggleButton("ComplexToggle2")
                 }
@@ -450,7 +602,7 @@ export class UserAuthentication {
                     this.SetAttribute("GoBackButton", "pale", "true")
                     try {
                         var ResultLoginViaRedirect = await fetch(ReadyBoxLoginRedirect.URL, {
-                            credentials : "include", // This is crucial!
+                            credentials: "include", // This is crucial!
                             method: "POST",
                             body: JSON.stringify({
                                 "otp": this.AuthState.Login.LoginUserOTPInput,
@@ -560,7 +712,7 @@ export class UserAuthentication {
                     try {
                         console.log(this.AuthState.Signup.SignupUserOTPInput)
                         var ResultSignupRedirect = await fetch(ReadyBoxSignupRedirect.URL, {
-                            credentials : "include" , 
+                            credentials: "include",
                             method: "POST",
                             body: JSON.stringify({
                                 "otp": this.AuthState.Signup.SignupUserOTPInput,

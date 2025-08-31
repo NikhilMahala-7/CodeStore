@@ -95,7 +95,7 @@ const UserAuthentication = () => {
             <div id="Authentication-Card">
                 <div id="Authentication-Card-Status-Box">
                     <div id="Authentication-Status-Container">
-                        <span>Login</span>
+                        <span>Enter your credentials to login</span>
                     </div>
                 </div>
                 <div id="Authentication-Card-Content-Box" pipeline="Login">
