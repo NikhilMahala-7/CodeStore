@@ -1,0 +1,20 @@
+#UserWallpaper{
+    height : 100vh ;
+    width : 100vw; 
+    min-height : 700px;
+    min-width : 1300px;
+    background-image : url("/public/Wallpapers/BigSur1.jpg") ; 
+    z-index : 1 ; 
+    position : absolute ; 
+    background-size : cover ; 
+}
+
+
+
+#UserDock{
+    position : absolute;
+    bottom : 0px;
+    left : 50% ;
+    transform : translate(-50% , 0%) ;
+    z-index : 2; 
+}
