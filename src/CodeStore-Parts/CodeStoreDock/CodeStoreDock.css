@@ -1,0 +1,15 @@
+#CodeStoreDock{
+    position : absolute; 
+    z-index : 3;
+    bottom : 5px;
+    left : 50%;
+    transform : translate(-50% , 0%) translateZ(0);
+    max-width : calc(100vw - 150px);
+/*     background : rgb(255,255,255,0.1);
+    filter : brightness(1) contrast(1) grayscale(0.05);
+    box-shadow : 0 5px 9px rgb(0,0,0,0.3),
+                inset 0 0 10px rgba(48, 47, 47, 0.2);
+    border : 1px solid rgba(156, 148, 148, 0.3); 
+    border-radius : 21px;
+    backdrop-filter : blur(50px); */
+}

@@ -1,0 +1,11 @@
+#CodeStoreCanvas{
+    height : 100vh;
+    width : 100vw ; 
+    background : linear-gradient(180deg , #FF0000 , #5D2DCD);
+    min-height : 700px  ;
+    min-width  : 1300px ;
+    position : relative ;
+    overflow : hidden   ; 
+}
+
+

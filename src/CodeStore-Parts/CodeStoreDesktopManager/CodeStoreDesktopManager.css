@@ -1,0 +1,12 @@
+#CodeStoreDesktopManager{
+    position : absolute;
+    inset : 0 ; 
+    z-index : 2 ; 
+}
+
+#CodeStoreDesktopManagerWorkingSpace{
+    height : 100vh ;
+    width : 100vw ; 
+    min-height : 700px;
+    min-width : 1300px;
+}
